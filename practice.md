@@ -20,7 +20,7 @@ cd pixi-practice
 npm run serve
 ```
 
-ブラウザで http://localhost:8080/ にアクセスするとサンプルが表示されるはずなので確認しておく。
+ブラウザで <http://localhost:8080/> にアクセスするとサンプルが表示されるはずなので確認しておく。
 
 ### pixi.jsインストール
 
@@ -32,7 +32,7 @@ npm install pixi.js
 
 Vue.jsのファイル構成がわかるようにファイルを変更していく。
 
-関連ファイルを保存すると http://localhost:8080/ が更新されるはずなので、ファイルの一文言を変更するたびにファイルを保存して動作を確認すると理解が早い。
+関連ファイルを保存すると <http://localhost:8080/> が更新されるはずなので、ファイルの一文言を変更するたびにファイルを保存して動作を確認すると理解が早い。
 
 ### HelloPixi
 
@@ -123,6 +123,9 @@ import * as PIXI from 'pixi.js';
 import AssetsImageLogo from "@/assets/logo.png";
 ```
 
+参考
+[Vue.jsでの画像指定方法を間違ってたので、振り返る](https://qiita.com/skmtko/items/a83f836b48f24309916d)
+
 ### logo.pngを表示して回転させてみる
 
 HelloPixi.vueのscriptの`export default`の部分を書き換えて、Vue.jsのロゴを回転させてみる。
@@ -212,7 +215,7 @@ export default {
 </script>
 ```
 
-textSmall初期化部を下記のようにthis.msgを渡してみると、App.vueのtemplate内の`<HelloPixi msg="Welcome to Your Pixi.js App"/>`で渡した文字が表示できる。
+textSmall初期化部を下記のように`this.msg`を渡してみると、App.vueのtemplate内の`<HelloPixi msg="Welcome to Your Pixi.js App"/>`で渡した文字が表示できる。
 
 ```vue:HelloPixi.vue
     let textSmall = new PIXI.Text(this.msg, styleSmall);
@@ -226,6 +229,8 @@ textSmall初期化部を下記のようにthis.msgを渡してみると、App.vu
 npm run build
 ```
 
+ファイルサイズがどうとかというWarningが出てくるかもしれないが、とりあえず動くのでここでは触れない。
+
 デフォルトだとdistディレクトリにビルド結果のファイルを置かれているので確認してみる。
 
 ```bash
@@ -234,11 +239,15 @@ ls -lt dist
 
 ### build資材を動かしてみる
 
-```bash
-# お試し動作コマンドをインストール
-npm install -g serve
+お試し動作コマンドをインストールする。
 
-# お試し動作させてみる
+```bash
+npm install -g serve
+```
+
+お試し動作させてみる。
+
+```bash
 serve -s dist
 
    ┌──────────────────────────────────────────────────┐
@@ -253,4 +262,207 @@ serve -s dist
    └──────────────────────────────────────────────────┘
 ```
 
-ブラウザで http://localhost:5000 にアクセスするとさっきと同じように動いているのが確認できるはず。
+ブラウザで <http://localhost:5000> にアクセスするとさっきと同じように動いているのが確認できるはず
+
+## キー入力でロゴを動かす
+
+PCゲーマーならお馴染みのWASDを使ったキーボード入力を実装してみる。
+
+### キーボード入力を受け付ける
+
+src/components/MoveLogo.vueを作成し、下記の通り入力する。
+
+```vue:MoveLogo.vue
+<template>
+  <canvas width="800" height="600"></canvas>
+</template>
+
+<script>
+import * as PIXI from "pixi.js";
+import AssetsImageLogo from "@/assets/logo.png";
+
+export default {
+  name: "MoveLogo",
+  mounted() {
+    //------画像のアニメーション-----//
+    // 表示するcanvasを用意
+    const app = new PIXI.Application({
+      view: this.$el,
+      backgroundColor : 0xDAE8F4
+    });
+
+    // イメージを指定
+    let logo = PIXI.Sprite.fromImage(AssetsImageLogo);
+
+    // 画像のアンカーポイントの指定
+    logo.anchor.set(0.5);
+
+    // 画像を画面中央に移動
+    logo.x = app.screen.width / 2;
+    logo.y = app.screen.height / 2;
+
+    // ステージに表示させる
+    app.stage.addChild(logo);
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>
+```
+
+参考
+
+* [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
+* [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
+
+このままでは画面に表示されないので、App.vueのtemplateに下記のように書き加えるとVue.jsのロゴが表示される。
+
+```vue:App.vue
+<template>
+  <div id="app">
+    <h2>HelloPixi</h2>
+    <HelloPixi msg="Welcome to Your Pixi.js App"/>
+    <h2>MoveLogo</h2>
+    <MoveLogo />
+  </div>
+</template>
+```
+
+次に、MoveLogo.vueにキーボードリスナを登録し、キーボード入力をconsoleに表示してみる。
+
+今回使ったのはkeydownイベントとkeyupイベントなので、キーボードを押したタイミングと話したタイミングでconsoleに対応するキー名が表示される。
+
+```vue:MoveLogo.vue
+    // ステージに表示させる
+    app.stage.addChild(logo);
+
+    // キーボードが押されたイベント
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+  }
+}
+
+function handleKeyDown(e){
+  var key = e.key;
+  console.log(key);
+}
+
+function handleKeyUp(e){
+  var key = e.key;
+  console.log(key);
+}
+</script>
+```
+
+### Unexpected console statementの表示を止める
+
+上記のコード入力を保存したところでconsoleが未定義というeslintのエラーが出るが、問題なく動くので設定を変更しておく。
+
+いろいろな設定方法があるみたいだけど、package.jsonに書いておくのがスマートそう。
+
+```json:package.json
+    "rules": {
+      "no-console": "off"
+    },
+```
+
+保存した後にnpm run serveをCtrl+Cで停止したあともう一度実行するとエラーが出ないはず。
+
+参考
+
+* [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
+* [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
+
+### キーボード入力状態変数
+
+ゲームでキーの入力状態を利用するために、`keyPressed`変数を作成する。
+
+```vue:MoveLogo.vue
+let keyPressed = {};
+
+function handleKeyDown(e){
+  var key = e.key;
+  keyPressed[key] = true;
+  console.log(keyPressed);
+}
+
+function handleKeyUp(e){
+  var key = e.key;
+  keyPressed[key] = false;
+  console.log(keyPressed);
+}
+</script>
+```
+
+keyPressedによってユーザがどのキーを押しているのかがわかり、複数キー同時押し状態にも対応できる。
+
+### キー入力でロゴを動かす
+
+ゲームループを実装する。これでconsoleにgameloop中の変数が出力される。
+
+```vue:MoveLogo.vue
+    // キーボードが押されたイベント
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+
+    // ゲームループを実装
+    app.ticker.add(delta => gameloop(delta, logo));
+  }
+}
+
+
+let keyPressed = {};
+
+function handleKeyDown(e){
+  var key = e.key;
+  keyPressed[key] = true;
+}
+
+function handleKeyUp(e){
+  var key = e.key;
+  keyPressed[key] = false;
+}
+
+// ゲームループで動かす関数
+function gameloop(delta, logo) {
+  console.log(’delta:’ + delta);
+  console.log(logo);
+  console.log(keyPressed);
+}
+</script>
+```
+
+このgameloop function内でkeyPressedを利用して、logoの位置を移動できるように変更する。
+
+```vue:MoveLogo.vue
+// ゲームループで動かす関数
+function gameloop(delta, logo) {
+  // 速度初期化
+  let vx = 0;
+  let vy = 0;
+  // 加速度定義
+  const ACCELERATION = 3;
+
+  // WASDのキー情報を確認して、速度を変更する。
+  if (keyPressed['w']) {
+    vy -= ACCELERATION;
+  }
+  if (keyPressed['a']) {
+    vx -= ACCELERATION;
+  }
+  if (keyPressed['s']) {
+    vy += ACCELERATION;
+  }
+  if (keyPressed['d']) {
+    vx += ACCELERATION;
+  }
+
+  // delta(前回実行時からの時間)と算出した速度をかけあわせて
+  // logoを移動させる。
+  logo.x += vx * delta;
+  logo.y += vy * delta;
+}
+</script>
+```
