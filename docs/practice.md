@@ -22,6 +22,10 @@
     - [キーボード入力状態変数](#キーボード入力状態変数)
     - [ゲームループを実装する](#ゲームループを実装する)
     - [速度計算とロゴ移動](#速度計算とロゴ移動)
+- [キャラクターアニメーション](#キャラクターアニメーション)
+    - [キャラクター画像生成](#キャラクター画像生成)
+    - [スプライトデータ作成](#スプライトデータ作成)
+    - [Pixi.jsのテクスチャで画像を読み込む](#pixijsのテクスチャで画像を読み込む)
 
 <!-- /TOC -->
 
@@ -494,3 +498,48 @@ function gameloop(delta, logo) {
 }
 </script>
 ```
+
+## キャラクターアニメーション
+
+主に、[Pixi.js でゲームを作ってみる vol.1](https://ryo620.org/2016/12/pixijs-game-01/)を参考にしてキャラクターを表示してアニメーションさせてみる。
+
+### キャラクター画像生成
+
+[WOLF RPGエディターのダウンロード](http://www.silversecond.com/WolfRPGEditor/Download.html)からグラフィック合成器をダウンロードして利用する。
+
+Windowsしか対応していないので注意。。。
+
+こんな感じでセーラー服少女を用意してみた。画像セットをデフォルト企画　大にしたのは、ある程度解像度が欲しかったから。
+
+![グラフィック合成器](images/graphic_gouseiki.png)
+
+src/assets/sailor_girl.pngに画像データを保存する。
+
+### スプライトデータ作成
+
+[ShoeBox](http://renderhjs.net/shoebox/)を使ってpixi.jsで使うsprite用のデータセットを準備する。
+
+まずインストール項目を読んで、インストールし、起動する。
+
+![ShoeBox Home](images/shoebox_home.png)
+
+先ほど保存したsailor_girl.pngをExtract Spritesにドラッグ&ドロップし、Saveを押す。
+
+![ShoeBox Extract Sprites](images/shoebox_extract_sprites.png)
+![ShoeBox Extract Sprites Settings](images/shoebox_extract_sprites_settings.png)
+
+するとsailor_girl_01~24.pngとsailor_girl.png.txtが作成されるので、これらのファイルを全て選択してSprite Sheetにドラッグ&ドロップする。
+
+Settingsボタンを押し、Sprite Sheet Settings画面のTemplateでpixi.jsを選択し、Applyを押してからSaveを押すと、sprites.jsとsprites.pngが作成される。
+
+![ShoeBox Sprite Sheet](images/shoebox_sprite_sheet.png)
+
+順番や位置がぐちゃってるけど気にしない。
+
+![ShoeBox Sprite Sheet Settings](images/shoebox_sprite_sheet_settings.png)
+
+sprites.jsはsailor_girl_sprites.jsonに、sprites.pngはsailor_girl_sprites.pngに命名変更する。
+
+sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する。
+
+### Pixi.jsのテクスチャで画像を読み込む
