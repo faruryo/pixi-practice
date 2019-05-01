@@ -1,5 +1,30 @@
 # 作り方
 
+<!-- TOC depthFrom:2 -->
+
+- [プロジェクト準備](#プロジェクト準備)
+    - [vue-cliのインストール](#vue-cliのインストール)
+    - [プロジェクトを作成する](#プロジェクトを作成する)
+    - [pixi.jsインストール](#pixijsインストール)
+- [はじめてのVue.js](#はじめてのvuejs)
+    - [HelloPixi](#hellopixi)
+- [はじめてのPixi.js](#はじめてのpixijs)
+    - [不要なコードを削除する](#不要なコードを削除する)
+    - [import](#import)
+    - [logo.pngを表示して回転させてみる](#logopngを表示して回転させてみる)
+    - [文字を表示させてみる](#文字を表示させてみる)
+- [buildする](#buildする)
+    - [build](#build)
+    - [build資材を動かしてみる](#build資材を動かしてみる)
+- [キー入力でロゴを動かす](#キー入力でロゴを動かす)
+    - [キーボード入力を受け付ける](#キーボード入力を受け付ける)
+    - [Unexpected console statementの表示を止める](#unexpected-console-statementの表示を止める)
+    - [キーボード入力状態変数](#キーボード入力状態変数)
+    - [ゲームループを実装する](#ゲームループを実装する)
+    - [速度計算とロゴ移動](#速度計算とロゴ移動)
+
+<!-- /TOC -->
+
 ## プロジェクト準備
 
 参考：[Vue.js を vue-cli を使ってシンプルにはじめてみる](https://qiita.com/567000/items/dde495d6a8ad1c25fa43)
@@ -314,8 +339,8 @@ export default {
 
 参考
 
-* [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
-* [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
+- [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
+- [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
 
 このままでは画面に表示されないので、App.vueのtemplateに下記のように書き加えるとVue.jsのロゴが表示される。
 
@@ -372,8 +397,8 @@ function handleKeyUp(e){
 
 参考
 
-* [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
-* [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
+- [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
+- [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
 
 ### キーボード入力状態変数
 
@@ -398,9 +423,10 @@ function handleKeyUp(e){
 
 keyPressedによってユーザがどのキーを押しているのかがわかり、複数キー同時押し状態にも対応できる。
 
-### キー入力でロゴを動かす
+### ゲームループを実装する
 
 ゲームループを実装する。これでconsoleにgameloop中の変数が出力される。
+ついでに、handleKeyのconsoleも削除しておく。
 
 ```vue:MoveLogo.vue
     // キーボードが押されたイベント
@@ -433,6 +459,8 @@ function gameloop(delta, logo) {
 }
 </script>
 ```
+
+### 速度計算とロゴ移動
 
 このgameloop function内でkeyPressedを利用して、logoの位置を移動できるように変更する。
 
