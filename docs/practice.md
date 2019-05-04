@@ -24,8 +24,10 @@
     - [速度計算とロゴ移動](#速度計算とロゴ移動)
 - [キャラクターアニメーション](#キャラクターアニメーション)
     - [キャラクター画像生成](#キャラクター画像生成)
-    - [スプライトデータ作成](#スプライトデータ作成)
-    - [Pixi.jsのテクスチャで画像を読み込む](#pixijsのテクスチャで画像を読み込む)
+    - [Texture Atrasデータ作成](#texture-atrasデータ作成)
+    - [Texture Atrasデータ作成 もう一つのやり方](#texture-atrasデータ作成-もう一つのやり方)
+    - [Texture Atras形式で画像読み込み](#texture-atras形式で画像読み込み)
+    - [AnimatedSpriteでキャラクターアニメーション](#animatedspriteでキャラクターアニメーション)
 
 <!-- /TOC -->
 
@@ -120,9 +122,9 @@ export default {
 
 ## はじめてのPixi.js
 
-参考
-[Pixi.jsでCanvasをカンタンに触ってみよう！](https://liginc.co.jp/398188)
-[Pixi.js でゲームを作ってみる vol.1](https://ryo620.org/2016/12/pixijs-game-01/)
+- 参考
+  - [Pixi.jsでCanvasをカンタンに触ってみよう！](https://liginc.co.jp/398188)
+  - [Pixi.js でゲームを作ってみる vol.1](https://ryo620.org/2016/12/pixijs-game-01/)
 
 ### 不要なコードを削除する
 
@@ -152,8 +154,7 @@ import * as PIXI from 'pixi.js';
 import AssetsImageLogo from "@/assets/logo.png";
 ```
 
-参考
-[Vue.jsでの画像指定方法を間違ってたので、振り返る](https://qiita.com/skmtko/items/a83f836b48f24309916d)
+参考：[Vue.jsでの画像指定方法を間違ってたので、振り返る](https://qiita.com/skmtko/items/a83f836b48f24309916d)
 
 ### logo.pngを表示して回転させてみる
 
@@ -341,10 +342,9 @@ export default {
 </style>
 ```
 
-参考
-
-- [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
-- [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
+- 参考
+  - [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
+  - [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
 
 このままでは画面に表示されないので、App.vueのtemplateに下記のように書き加えるとVue.jsのロゴが表示される。
 
@@ -399,10 +399,9 @@ function handleKeyUp(e){
 
 保存した後にnpm run serveをCtrl+Cで停止したあともう一度実行するとエラーが出ないはず。
 
-参考
-
-- [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
-- [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
+- 参考
+  - [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
+  - [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
 
 ### キーボード入力状態変数
 
@@ -515,9 +514,9 @@ Windowsしか対応していないので注意。。。
 
 src/assets/sailor_girl.pngに画像データを保存する。
 
-### スプライトデータ作成
+### Texture Atrasデータ作成
 
-[ShoeBox](http://renderhjs.net/shoebox/)を使ってpixi.jsで使うsprite用のデータセットを準備する。
+[ShoeBox](http://renderhjs.net/shoebox/)を使い、作成したキャラクター画像からTexture Atras形式のデータを生成する。
 
 まずインストール項目を読んで、インストールし、起動する。
 
@@ -528,18 +527,165 @@ src/assets/sailor_girl.pngに画像データを保存する。
 ![ShoeBox Extract Sprites](images/shoebox_extract_sprites.png)
 ![ShoeBox Extract Sprites Settings](images/shoebox_extract_sprites_settings.png)
 
-するとsailor_girl_01~24.pngとsailor_girl.png.txtが作成されるので、これらのファイルを全て選択してSprite Sheetにドラッグ&ドロップする。
+上記を実行するとsailor_girl_01~24.pngとsailor_girl.png.txtが作成されるので、これらのファイルを全て選択してSprite Sheetにドラッグ&ドロップする。
 
 Settingsボタンを押し、Sprite Sheet Settings画面のTemplateでpixi.jsを選択し、Applyを押してからSaveを押すと、sprites.jsとsprites.pngが作成される。
 
 ![ShoeBox Sprite Sheet](images/shoebox_sprite_sheet.png)
-
-順番や位置がぐちゃってるけど気にしない。
-
 ![ShoeBox Sprite Sheet Settings](images/shoebox_sprite_sheet_settings.png)
+
+pngファイルは見ての通り全ての画像を合体した一つのファイルになっていて、jsonファイルは個々の画像をpngファイルのどこにあるかなどをまとめた形になっている。
+
+なので、順番や位置がぐちゃってるけど気にしない。
 
 sprites.jsはsailor_girl_sprites.jsonに、sprites.pngはsailor_girl_sprites.pngに命名変更する。
 
+jsonファイルの中にもファイル名が書かれているので、sailor_girl_sprites.jsonのmeta情報も変更する。
+
+```json:sailor_girl_sprites.json
+  "meta": {
+    "image": "sailor_girl_sprites.png",
+      "size": { "w": 172, "h": 152 },
+    "scale": "1"
+  }
+```
+
 sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する。
 
-### Pixi.jsのテクスチャで画像を読み込む
+### Texture Atrasデータ作成 もう一つのやり方
+
+たんしおレモンさんのサイトにsprite用jsonファイル生成ツールがあったので、こちらでも良いかも。
+
+[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)
+
+```form
+ファイル名：sailor_girl_sprites.png
+テクスチャ名：sailor_girl_@@.png
+取り出しＸサイズ：32
+取り出しＹサイズ：48
+取り出し総数：24
+画像Ｘサイズ：192
+画像Ｙサイズ：192
+パディング：0
+```
+
+### Texture Atras形式で画像読み込み
+
+下記の通り、src/components/CharacterAnimation.vueを新しく作成する。
+
+```vue:CharacterAnimation.vue
+<template>
+  <canvas width="800" height="600"></canvas>
+</template>
+
+<script>
+import * as PIXI from "pixi.js";
+import GirlSpritesJson from "@/assets/sailor_girl_sprites.json";
+import GirlSpritesPng from "@/assets/sailor_girl_sprites.png";
+
+export default {
+  name: "CharacterAnimation",
+  methods: {
+    /** Assetsデータ読み込み後の非同期処理 */
+    onAssetsLoaded: function() {
+      // 2.pngファイルを元にBaseTextureを生成する
+      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+      // 3.Spritesheetオブジェクトを生成開始する
+      const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
+      spritesheet.parse(this.onSpritesheetLoaded);
+    },
+    /** Spritesheet生成完了後の非同期処理 */
+    onSpritesheetLoaded: function(textures) {
+      // 4.テクスチャを取り出す
+      let texture = textures["sailor_girl_01.png"];
+      let girl = PIXI.Sprite.from(texture);
+      girl.anchor.set(0.5);
+      girl.x = this.app.view.width / 2;
+      girl.y = this.app.view.height / 2;
+      this.app.stage.addChild(girl);
+    }
+  },
+  mounted: function() {
+    this.app = new PIXI.Application({
+      view: this.$el,
+      backgroundColor : 0xDAE8F4
+    });
+
+    // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
+    PIXI.loader.reset();
+
+    // 1.pngファイルを読み込む
+    const loader = PIXI.loader.add(GirlSpritesPng);
+    loader.load(this.onAssetsLoaded);
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>
+```
+
+App.vueに作成したCharacterAnimationを記述して画面表示してみよう。
+
+```vue:App.vue
+<template>
+  <div id="app">
+    <h2>HelloPixi</h2>
+    <HelloPixi msg="Welcome to Your Pixi.js App"/>
+    <h2>MoveLogo</h2>
+    <MoveLogo />
+    <h2>CharacterAnimation</h2>
+    <CharacterAnimation />
+  </div>
+</template>
+
+<script>
+import HelloPixi from './components/HelloPixi.vue'
+import MoveLogo from './components/MoveLogo.vue'
+import CharacterAnimation from './components/CharacterAnimation.vue'
+
+export default {
+  name: 'app',
+  components: {
+    HelloPixi,
+    MoveLogo,
+    CharacterAnimation
+  }
+}
+</script>
+```
+
+- 参考
+  - [Refactors the spritesheet, texture and bitmap font loaders by bigtimebuddy · Pull Request #3676 · pixijs/pixi.js](https://github.com/pixijs/pixi.js/pull/3676)
+  - [Reloading a spritesheet · Issue #2419 · pixijs/pixi.js](https://github.com/pixijs/pixi.js/issues/2419)
+  
+### AnimatedSpriteでキャラクターアニメーション
+
+onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー服少女を表示してみよう。
+
+```vue:CharacterAnimation.vue
+    onSpritesheetLoaded: function(textures) {
+      // 4.テクスチャを取り出す
+      let texture = textures["sailor_girl_01.png"];
+      let girl = PIXI.Sprite.from(texture);
+      girl.anchor.set(0.5);
+      girl.x = this.app.view.width / 2;
+      girl.y = this.app.view.height / 2;
+      this.app.stage.addChild(girl);
+
+      // 5.アニメーション
+      let downTextures = [
+        textures["sailor_girl_01.png"],
+        textures["sailor_girl_03.png"]
+      ];
+      let walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
+      walk_girl.anchor.set(0.5);
+      walk_girl.x = this.app.view.width / 2 + 64;
+      walk_girl.y = this.app.view.height / 2;
+      walk_girl.animationSpeed = 0.05;
+      walk_girl.play();
+      this.app.stage.addChild(walk_girl);
+    }
+  },
+```

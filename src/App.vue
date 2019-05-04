@@ -4,18 +4,22 @@
     <HelloPixi msg="Welcome to Your Pixi.js App"/>
     <h2>MoveLogo</h2>
     <MoveLogo />
+    <h2>CharacterAnimation</h2>
+    <CharacterAnimation />
   </div>
 </template>
 
 <script>
 import HelloPixi from './components/HelloPixi.vue'
 import MoveLogo from './components/MoveLogo.vue'
+import CharacterAnimation from './components/CharacterAnimation.vue'
 
 export default {
   name: 'app',
   components: {
     HelloPixi,
-    MoveLogo
+    MoveLogo,
+    CharacterAnimation
   }
 }
 </script>
