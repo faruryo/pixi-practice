@@ -43,13 +43,11 @@ let keyPressed = {};
 function handleKeyDown(e) {
   var key = e.key;
   keyPressed[key] = true;
-  console.log(keyPressed);
 }
 
 function handleKeyUp(e) {
   var key = e.key;
   keyPressed[key] = false;
-  console.log(keyPressed);
 }
 
 // ゲームループで動かす関数
