@@ -22,7 +22,6 @@ export default {
     onSpritesheetLoaded: function(textures) {
       // girl関連SpriteをまとめるContainerを作る
       this.girlContainer = new PIXI.Container();
-      debugger;
 
       // 8方向セーラー少女を生成
       this.girls = this.createDirectionSprites(textures);
