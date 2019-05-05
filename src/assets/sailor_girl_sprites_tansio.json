@@ -1,592 +1,493 @@
 {
-	"frames":
-	{
-		"sailor_girl_00.png":
-		{
-			"frame":
-			{
-				"x":0,
-				"y":0,
-				"w":32,
-				"h":48
+	"frames": {
+		"sailor_girl_00": {
+			"frame": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":0,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_01.png":
-		{
-			"frame":
-			{
-				"x":32,
-				"y":0,
-				"w":32,
-				"h":48
+		"sailor_girl_01": {
+			"frame": {
+				"x": 32,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":32,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 32,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_02.png":
-		{
-			"frame":
-			{
-				"x":64,
-				"y":0,
-				"w":32,
-				"h":48
+		"sailor_girl_02": {
+			"frame": {
+				"x": 64,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":64,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 64,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_03.png":
-		{
-			"frame":
-			{
-				"x":96,
-				"y":0,
-				"w":32,
-				"h":48
+		"sailor_girl_03": {
+			"frame": {
+				"x": 96,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":96,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 96,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_04.png":
-		{
-			"frame":
-			{
-				"x":128,
-				"y":0,
-				"w":32,
-				"h":48
+		"sailor_girl_04": {
+			"frame": {
+				"x": 128,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":128,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 128,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_05.png":
-		{
-			"frame":
-			{
-				"x":160,
-				"y":0,
-				"w":32,
-				"h":48
+		"sailor_girl_05": {
+			"frame": {
+				"x": 160,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":160,
-				"y":0,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 160,
+				"y": 0,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_06.png":
-		{
-			"frame":
-			{
-				"x":0,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_06": {
+			"frame": {
+				"x": 0,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":0,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_07.png":
-		{
-			"frame":
-			{
-				"x":32,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_07": {
+			"frame": {
+				"x": 32,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":32,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 32,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_08.png":
-		{
-			"frame":
-			{
-				"x":64,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_08": {
+			"frame": {
+				"x": 64,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":64,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 64,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_09.png":
-		{
-			"frame":
-			{
-				"x":96,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_09": {
+			"frame": {
+				"x": 96,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":96,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 96,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_10.png":
-		{
-			"frame":
-			{
-				"x":128,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_10": {
+			"frame": {
+				"x": 128,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":128,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 128,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_11.png":
-		{
-			"frame":
-			{
-				"x":160,
-				"y":48,
-				"w":32,
-				"h":48
+		"sailor_girl_11": {
+			"frame": {
+				"x": 160,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":160,
-				"y":48,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 160,
+				"y": 48,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_12.png":
-		{
-			"frame":
-			{
-				"x":0,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_12": {
+			"frame": {
+				"x": 0,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":0,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_13.png":
-		{
-			"frame":
-			{
-				"x":32,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_13": {
+			"frame": {
+				"x": 32,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":32,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 32,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_14.png":
-		{
-			"frame":
-			{
-				"x":64,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_14": {
+			"frame": {
+				"x": 64,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":64,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 64,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_15.png":
-		{
-			"frame":
-			{
-				"x":96,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_15": {
+			"frame": {
+				"x": 96,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":96,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 96,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_16.png":
-		{
-			"frame":
-			{
-				"x":128,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_16": {
+			"frame": {
+				"x": 128,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":128,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 128,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_17.png":
-		{
-			"frame":
-			{
-				"x":160,
-				"y":96,
-				"w":32,
-				"h":48
+		"sailor_girl_17": {
+			"frame": {
+				"x": 160,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":160,
-				"y":96,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 160,
+				"y": 96,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_18.png":
-		{
-			"frame":
-			{
-				"x":0,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_18": {
+			"frame": {
+				"x": 0,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":0,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_19.png":
-		{
-			"frame":
-			{
-				"x":32,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_19": {
+			"frame": {
+				"x": 32,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":32,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 32,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_20.png":
-		{
-			"frame":
-			{
-				"x":64,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_20": {
+			"frame": {
+				"x": 64,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":64,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 64,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_21.png":
-		{
-			"frame":
-			{
-				"x":96,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_21": {
+			"frame": {
+				"x": 96,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":96,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 96,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_22.png":
-		{
-			"frame":
-			{
-				"x":128,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_22": {
+			"frame": {
+				"x": 128,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":128,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 128,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		},
-		"sailor_girl_23.png":
-		{
-			"frame":
-			{
-				"x":160,
-				"y":144,
-				"w":32,
-				"h":48
+		"sailor_girl_23": {
+			"frame": {
+				"x": 160,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
 			"rotated": false,
 			"trimmed": false,
-			"spriteSourceSize":
-			{
-				"x":160,
-				"y":144,
-				"w":32,
-				"h":48
+			"spriteSourceSize": {
+				"x": 160,
+				"y": 144,
+				"w": 32,
+				"h": 48
 			},
-			"sourceSize":
-			{
-				"w":32,
-				"h":48
+			"sourceSize": {
+				"w": 32,
+				"h": 48
 			}
 		}
 	},
-	"meta":
-	{
+	"meta": {
 		"app": "http://www.tansio.net/mobile/twitter/00002/",
-		"image":"sailor_girl_sprites_tansio.png",
+		"image": "sailor_girl_sprites_tansio.png",
 		"format": "RGBA8888",
-		"size":
-		{
-				"w":192,
-				"h":192
+		"size": {
+			"w": 192,
+			"h": 192
 		},
 		"scale": 1
 	}

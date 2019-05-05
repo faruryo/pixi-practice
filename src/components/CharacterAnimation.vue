@@ -4,8 +4,8 @@
 
 <script>
 import * as PIXI from "pixi.js";
-import GirlSpritesJson from "@/assets/sailor_girl_sprites.json";
-import GirlSpritesPng from "@/assets/sailor_girl_sprites.png";
+import GirlSpritesJson from "@/assets/sailor_girl_sprites_tansio.json";
+import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 
 export default {
   name: "CharacterAnimation",
@@ -21,7 +21,7 @@ export default {
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
-      let texture = textures["sailor_girl_01.png"];
+      let texture = textures["sailor_girl_01"];
       let girl = PIXI.Sprite.from(texture);
       girl.anchor.set(0.5);
       girl.x = this.app.view.width / 2;
@@ -30,8 +30,10 @@ export default {
 
       // 5.アニメーション
       let downTextures = [
-        textures["sailor_girl_01.png"],
-        textures["sailor_girl_03.png"]
+        textures["sailor_girl_01"],
+        textures["sailor_girl_00"],
+        textures["sailor_girl_01"],
+        textures["sailor_girl_02"],
       ];
       let walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
       walk_girl.anchor.set(0.5);

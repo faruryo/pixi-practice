@@ -27,7 +27,7 @@ Vue.js上でpixi.jsを用いたゲーム作りをするべく、プロジェク�
 - [キャラクターアニメーション](#キャラクターアニメーション)
     - [キャラクター画像生成](#キャラクター画像生成)
     - [Texture Atrasデータ作成](#texture-atrasデータ作成)
-    - [Texture Atrasデータ作成 もう一つのやり方](#texture-atrasデータ作成-もう一つのやり方)
+    - [(おまけ)Texture Atrasデータ作成 もう一つのやり方](#おまけtexture-atrasデータ作成-もう一つのやり方)
     - [Texture Atras形式で画像読み込み](#texture-atras形式で画像読み込み)
     - [AnimatedSpriteでキャラクターアニメーション](#animatedspriteでキャラクターアニメーション)
 
@@ -518,7 +518,32 @@ src/assets/sailor_girl.pngに画像データを保存する。
 
 ### Texture Atrasデータ作成
 
-[ShoeBox](http://renderhjs.net/shoebox/)を使い、作成したキャラクター画像からTexture Atras形式のデータを生成する。
+たんしおレモンさんのサイトの[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)を利用して作成したキャラクター画像からTexture Atras形式のデータを生成する。
+
+まずsrc/assets/sailor_girl.pngをsrc/assets/sailor_girl_sprites_tansio.pngにコピーしておこう。
+
+つぎにsrc/assets/sailor_girl_sprites_tansio.jsonをテキストファイルとして生成しておく。
+
+[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)をブラウザで表示して、下記の通り入力してから生成ボタンを押す。
+
+```form
+ファイル名：sailor_girl_sprites_tansio.png
+テクスチャ名：sailor_girl_@@
+取り出しＸサイズ：32
+取り出しＹサイズ：48
+取り出し総数：24
+画像Ｘサイズ：192
+画像Ｙサイズ：192
+パディング：0
+```
+
+下部フォームにjson情報が生成されるので、そのデータをsailor_girl_sprites_tansio.jsonに入力する。
+
+### (おまけ)Texture Atrasデータ作成 もう一つのやり方
+
+[ShoeBox](http://renderhjs.net/shoebox/)というツールを使い、作成したキャラクター画像からTexture Atras形式のデータを生成することもできる。
+
+たんしおさんツールで作成した時と比べ、画像サイズが最小になって良かったりもするのだが、余白がすべて削り取られることにより、アニメーション位置がずれるので調整が必要になるので、アニメーションする場合は注意を要する。
 
 まずインストール項目を読んで、インストールし、起動する。
 
@@ -540,36 +565,19 @@ pngファイルは見ての通り全ての画像を合体した一つのファ�
 
 なので、順番や位置がぐちゃってるけど気にしない。
 
-sprites.jsはsailor_girl_sprites.jsonに、sprites.pngはsailor_girl_sprites.pngに命名変更する。
+sprites.jsはsailor_girl_sprites_shoebox.jsonに、sprites.pngはsailor_girl_sprites_shoebox.pngに命名変更する。
 
-jsonファイルの中にもファイル名が書かれているので、sailor_girl_sprites.jsonのmeta情報も変更する。
+jsonファイルの中にもファイル名が書かれているので、sailor_girl_sprites_shoebox.jsonのmeta情報も変更する。
 
-```json:sailor_girl_sprites.json
+```json:sailor_girl_sprites_shoebox.json
   "meta": {
-    "image": "sailor_girl_sprites.png",
+    "image": "sailor_girl_sprites_shoebox.png",
       "size": { "w": 172, "h": 152 },
     "scale": "1"
   }
 ```
 
 sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する。
-
-### Texture Atrasデータ作成 もう一つのやり方
-
-たんしおレモンさんのサイトにsprite用jsonファイル生成ツールがあったので、こちらでも良いかも。
-
-[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)
-
-```form
-ファイル名：sailor_girl_sprites.png
-テクスチャ名：sailor_girl_@@.png
-取り出しＸサイズ：32
-取り出しＹサイズ：48
-取り出し総数：24
-画像Ｘサイズ：192
-画像Ｙサイズ：192
-パディング：0
-```
 
 ### Texture Atras形式で画像読み込み
 
@@ -582,8 +590,8 @@ sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する�
 
 <script>
 import * as PIXI from "pixi.js";
-import GirlSpritesJson from "@/assets/sailor_girl_sprites.json";
-import GirlSpritesPng from "@/assets/sailor_girl_sprites.png";
+import GirlSpritesJson from "@/assets/sailor_girl_sprites_tansio.json";
+import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 
 export default {
   name: "CharacterAnimation",
@@ -599,7 +607,7 @@ export default {
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
-      let texture = textures["sailor_girl_01.png"];
+      let texture = textures["sailor_girl_01"];
       let girl = PIXI.Sprite.from(texture);
       girl.anchor.set(0.5);
       girl.x = this.app.view.width / 2;
@@ -669,7 +677,7 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
 ```vue:CharacterAnimation.vue
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
-      let texture = textures["sailor_girl_01.png"];
+      let texture = textures["sailor_girl_01"];
       let girl = PIXI.Sprite.from(texture);
       girl.anchor.set(0.5);
       girl.x = this.app.view.width / 2;
@@ -678,8 +686,8 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
 
       // 5.アニメーション
       let downTextures = [
-        textures["sailor_girl_01.png"],
-        textures["sailor_girl_03.png"]
+        textures["sailor_girl_01"],
+        textures["sailor_girl_03"]
       ];
       let walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
       walk_girl.anchor.set(0.5);
