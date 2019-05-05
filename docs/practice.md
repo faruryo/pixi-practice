@@ -168,7 +168,7 @@ import AssetsImageLogo from "@/assets/logo.png";
 
 HelloPixi.vueのscriptの`export default`の部分を書き換えて、Vue.jsのロゴを回転させてみる。
 
-``` javascript:HelloPixi.vue
+``` javascript
 export default {
   name: 'HelloPixi',
   props: {
@@ -207,7 +207,7 @@ export default {
 
 さらにscript部分を書き換えて文字を表示させてみる。
 
-``` javascript:HelloPixi.vue
+``` javascript
     // アニメーションの再生、ループ
     app.ticker.add(function(delta) {
         // 画像を回転
@@ -371,7 +371,7 @@ export default {
 
 今回使ったのはkeydownイベントとkeyupイベントなので、キーボードを押したタイミングと話したタイミングでconsoleに対応するキー名が表示される。
 
-``` javascript:MoveLogo.vue
+``` javascript
     // ステージに表示させる
     app.stage.addChild(logo);
 
@@ -415,7 +415,7 @@ function handleKeyUp(e){
 
 ゲームでキーの入力状態を利用するために、`keyPressed`変数を作成する。
 
-``` javascript:MoveLogo.vue
+``` javascript
 let keyPressed = {};
 
 function handleKeyDown(e){
@@ -439,7 +439,7 @@ keyPressedによってユーザがどのキーを押しているのかがわか�
 ゲームループを実装する。これでconsoleにgameloop中の変数が出力される。
 ついでに、handleKeyのconsoleも削除しておく。
 
-``` javascript:MoveLogo.vue
+``` javascript
     // キーボードが押されたイベント
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
@@ -475,7 +475,7 @@ function gameloop(delta, logo) {
 
 このgameloop function内でkeyPressedを利用して、logoの位置を移動できるように変更する。
 
-``` javascript:MoveLogo.vue
+``` javascript
 // ゲームループで動かす関数
 function gameloop(delta, logo) {
   // 速度初期化
@@ -680,7 +680,7 @@ export default {
 
 onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー服少女を表示してみよう。
 
-``` javascript:CharacterAnimation.vue
+``` javascript
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
       let texture = textures["sailor_girl_01"];
@@ -714,7 +714,7 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
 
 例のごとくCharacterMovement.vueを新しく作成する。一部だけ示すとこんな感じになるだろう。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       let downTextures = [
@@ -789,7 +789,7 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
 
 下記のコードを書き加えるとconsoleに移動方向に応じた方向が表示されるはずだ。
 
-``` javascript:CharacterMovement.vue
+``` javascript
       // delta(前回実行時からの時間)と算出した速度をかけあわせて
       // this.walk_girlを移動させる。
       this.walk_girl.x += vx * delta;
@@ -846,7 +846,7 @@ getDirectionは移動方向に応じた方向を文字列で返すメソッド�
 
 次に8方向のAnimatedSpriteを作成する。下記のようにcreateDirectionSpritesメソッドとcreateAnimatedSpriteメソッドを追加しよう。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** AnimatedSpriteを作成して返す */
     createAnimatedSprite: function(textureArray) {
       let sprite = new PIXI.extras.AnimatedSprite(textureArray);
@@ -860,7 +860,7 @@ getDirectionは移動方向に応じた方向を文字列で返すメソッド�
 
 createAnimatedSpriteはテスクチャ要素が入った配列オブジェクトを渡すとAnimatedSpriteに変換してくれるしろもの。AnimatedSprite生成時の共通処理をまとめる。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** 方向ごとのAnimatedSpriteを作成しHashで返す */
     createDirectionSprites: function(textureHash) {
       let spriteHash = {};
@@ -933,7 +933,7 @@ createDirectionSpritesはSpritesheetのテクスチャハッシュオブジェ�
 
 8方向のAnimatedSpriteを使ったらこれらのSpriteをまとめるために、Containerを作成し関連づける。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // girl関連SpriteをまとめるContainerを作る
@@ -965,7 +965,7 @@ createDirectionSpritesはSpritesheetのテクスチャハッシュオブジェ�
 
 walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 
-``` javascript:CharacterMovement.vue
+``` javascript
       // delta(前回実行時からの時間)と算出した速度をかけあわせて
       // this.girlContainerを移動させる。
       this.girlContainer.x += vx * delta;
@@ -980,7 +980,7 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 
 現在セーラー少女が向いている方向に合わせて、向いている方向のAnimatedSpriteだけを表示するようにする。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // girl関連SpriteをまとめるContainerを作る
@@ -1011,7 +1011,7 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
     },
 ```
 
-``` javascript:CharacterMovement.vue
+``` javascript
       // delta(前回実行時からの時間)と算出した速度をかけあわせて
       // this.girlContainerを移動させる。
       this.girlContainer.x += vx * delta;
@@ -1027,7 +1027,7 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 
 方向を設定するためのメソッドはsetDirectionとして新規作成した。
 
-``` javascript:CharacterMovement.vue
+``` javascript
     /** 指定のAnimatedSpriteを表示する */
     setDirection: function(spriteHash, direction) {
       if (!spriteHash[direction]) {
