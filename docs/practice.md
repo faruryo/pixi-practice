@@ -30,6 +30,12 @@ Vue.js上でpixi.jsを用いたゲーム作りをするべく、プロジェク�
     - [(おまけ)Texture Atrasデータ作成 もう一つのやり方](#おまけtexture-atrasデータ作成-もう一つのやり方)
     - [Texture Atras形式で画像読み込み](#texture-atras形式で画像読み込み)
     - [AnimatedSpriteでキャラクターアニメーション](#animatedspriteでキャラクターアニメーション)
+- [キャラクターを歩かせてみる](#キャラクターを歩かせてみる)
+    - [セーラー少女を動かしてみる](#セーラー少女を動かしてみる)
+    - [方向概念の導入](#方向概念の導入)
+    - [8方向のAnimatedSpriteを作成する](#8方向のanimatedspriteを作成する)
+    - [SpriteをまとめるContainer](#spriteをまとめるcontainer)
+    - [セーラー少女を歩かせる](#セーラー少女を歩かせる)
 
 <!-- /TOC -->
 
@@ -39,13 +45,13 @@ Vue.js上でpixi.jsを用いたゲーム作りをするべく、プロジェク�
 
 ### vue-cliのインストール
 
-```bash
+``` bash
 npm install -g @vue/cli
 ```
 
 ### プロジェクトを作成する
 
-```bash
+``` bash
 vue create pixi-practice
 > default
 
@@ -57,7 +63,7 @@ npm run serve
 
 ### pixi.jsインストール
 
-```bash
+``` bash
 npm install pixi.js
 ```
 
@@ -71,7 +77,7 @@ Vue.jsのファイル構成がわかるようにファイルを変更してい�
 
 App.vueのtemplateを下記のように書き換えて保存し、ロゴが消え、文言が変わることを確認する。
 
-```vue:App.vue
+``` vue:App.vue
 <template>
   <div id="app">
     <HelloWorld msg="Welcome to Your Pixi.js App"/>
@@ -81,7 +87,7 @@ App.vueのtemplateを下記のように書き換えて保存し、ロゴが消�
 
 templateとscriptのHelloWorldをHelloPixiに書き換える。
 
-```vue:App.vue
+``` vue:App.vue
 <template>
   <div id="app">
     <HelloPixi msg="Welcome to Your Pixi.js App"/>
@@ -102,7 +108,7 @@ export default {
 
 scriptのHelloWorld.vueをHelloPixi.vueに書き換え、ブラウザエラーもしくは何も表示されなくなることを確認する。
 
-```vue:App.vue
+``` vue:App.vue
 <script>
 import HelloPixi from './components/HelloPixi.vue'
 ```
@@ -111,7 +117,7 @@ import HelloPixi from './components/HelloPixi.vue'
 
 念の為HelloPixi.vueの下記Script部分もHelloWorldをHelloPixiに書き換える。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
 <script>
 export default {
   name: 'HelloPixi',
@@ -132,7 +138,7 @@ export default {
 
 HelloPixi.vueのtemplateとstyleを色々削除しておく。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
 <template>
   <div class="hello">
     <div class="stage" id="stage"></div>
@@ -150,7 +156,7 @@ HelloPixi.vueのscriptの冒頭に下記を記載する。
 
 1行目でpixi.js読み込みで、2行目は今回のサンプルで利用するlogo.pngを利用する準備。これらのファイルを利用することをvue-cliに教えておくおことで、vue-cliでバンドルする際にパス関連等をうまく調整してくれる。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
 <script>
 import * as PIXI from 'pixi.js';
 import AssetsImageLogo from "@/assets/logo.png";
@@ -162,7 +168,7 @@ import AssetsImageLogo from "@/assets/logo.png";
 
 HelloPixi.vueのscriptの`export default`の部分を書き換えて、Vue.jsのロゴを回転させてみる。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
 export default {
   name: 'HelloPixi',
   props: {
@@ -201,7 +207,7 @@ export default {
 
 さらにscript部分を書き換えて文字を表示させてみる。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
     // アニメーションの再生、ループ
     app.ticker.add(function(delta) {
         // 画像を回転
@@ -249,7 +255,7 @@ export default {
 
 textSmall初期化部を下記のように`this.msg`を渡してみると、App.vueのtemplate内の`<HelloPixi msg="Welcome to Your Pixi.js App"/>`で渡した文字が表示できる。
 
-```vue:HelloPixi.vue
+``` vue:HelloPixi.vue
     let textSmall = new PIXI.Text(this.msg, styleSmall);
 ```
 
@@ -257,7 +263,7 @@ textSmall初期化部を下記のように`this.msg`を渡してみると、App.
 
 ### build
 
-```bash
+``` bash
 npm run build
 ```
 
@@ -265,7 +271,7 @@ npm run build
 
 デフォルトだとdistディレクトリにビルド結果のファイルを置かれているので確認してみる。
 
-```bash
+``` bash
 ls -lt dist
 ```
 
@@ -273,14 +279,14 @@ ls -lt dist
 
 お試し動作コマンドをインストールする。
 
-```bash
+``` bash
 npm install -g serve
 ```
 
 お試し動作させてみる。
 
-```bash
-serve -s dist
+``` bash
+$ serve -s dist
 
    ┌──────────────────────────────────────────────────┐
    │                                                  │
@@ -304,7 +310,7 @@ PCゲーマーならお馴染みのWASDを使ったキーボード入力を実�
 
 src/components/MoveLogo.vueを作成し、下記の通り入力する。
 
-```vue:MoveLogo.vue
+``` vue:MoveLogo.vue
 <template>
   <canvas width="800" height="600"></canvas>
 </template>
@@ -350,7 +356,7 @@ export default {
 
 このままでは画面に表示されないので、App.vueのtemplateに下記のように書き加えるとVue.jsのロゴが表示される。
 
-```vue:App.vue
+``` vue:App.vue
 <template>
   <div id="app">
     <h2>HelloPixi</h2>
@@ -365,7 +371,7 @@ export default {
 
 今回使ったのはkeydownイベントとkeyupイベントなので、キーボードを押したタイミングと話したタイミングでconsoleに対応するキー名が表示される。
 
-```vue:MoveLogo.vue
+``` vue:MoveLogo.vue
     // ステージに表示させる
     app.stage.addChild(logo);
 
@@ -393,7 +399,7 @@ function handleKeyUp(e){
 
 いろいろな設定方法があるみたいだけど、package.jsonに書いておくのがスマートそう。
 
-```json:package.json
+``` json:package.json
     "rules": {
       "no-console": "off"
     },
@@ -409,7 +415,7 @@ function handleKeyUp(e){
 
 ゲームでキーの入力状態を利用するために、`keyPressed`変数を作成する。
 
-```vue:MoveLogo.vue
+``` vue:MoveLogo.vue
 let keyPressed = {};
 
 function handleKeyDown(e){
@@ -433,7 +439,7 @@ keyPressedによってユーザがどのキーを押しているのかがわか�
 ゲームループを実装する。これでconsoleにgameloop中の変数が出力される。
 ついでに、handleKeyのconsoleも削除しておく。
 
-```vue:MoveLogo.vue
+``` vue:MoveLogo.vue
     // キーボードが押されたイベント
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
@@ -469,7 +475,7 @@ function gameloop(delta, logo) {
 
 このgameloop function内でkeyPressedを利用して、logoの位置を移動できるように変更する。
 
-```vue:MoveLogo.vue
+``` vue:MoveLogo.vue
 // ゲームループで動かす関数
 function gameloop(delta, logo) {
   // 速度初期化
@@ -569,7 +575,7 @@ sprites.jsはsailor_girl_sprites_shoebox.jsonに、sprites.pngはsailor_girl_spr
 
 jsonファイルの中にもファイル名が書かれているので、sailor_girl_sprites_shoebox.jsonのmeta情報も変更する。
 
-```json:sailor_girl_sprites_shoebox.json
+``` json:sailor_girl_sprites_shoebox.json
   "meta": {
     "image": "sailor_girl_sprites_shoebox.png",
       "size": { "w": 172, "h": 152 },
@@ -583,7 +589,7 @@ sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する�
 
 下記の通り、src/components/CharacterAnimation.vueを新しく作成する。
 
-```vue:CharacterAnimation.vue
+``` vue:CharacterAnimation.vue
 <template>
   <canvas width="800" height="600"></canvas>
 </template>
@@ -638,7 +644,7 @@ export default {
 
 App.vueに作成したCharacterAnimationを記述して画面表示してみよう。
 
-```vue:App.vue
+``` vue:App.vue
 <template>
   <div id="app">
     <h2>HelloPixi</h2>
@@ -674,7 +680,7 @@ export default {
 
 onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー服少女を表示してみよう。
 
-```vue:CharacterAnimation.vue
+``` vue:CharacterAnimation.vue
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
       let texture = textures["sailor_girl_01"];
@@ -699,3 +705,345 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
     }
   },
 ```
+
+## キャラクターを歩かせてみる
+
+### セーラー少女を動かしてみる
+
+まずは[キー入力でロゴを動かす](#キー入力でロゴを動かす)と[キャラクターアニメーション](#キャラクターアニメーション)を組み合わせてアニメーションさせたセーラー少女を動かしてみよう。
+
+例のごとくCharacterMovement.vueを新しく作成する。一部だけ示すとこんな感じになるだろう。
+
+``` vue:CharacterMovement.vue
+    /** Spritesheet生成完了後の非同期処理 */
+    onSpritesheetLoaded: function(textures) {
+      let downTextures = [
+        textures["sailor_girl_01"],
+        textures["sailor_girl_00"],
+        textures["sailor_girl_01"],
+        textures["sailor_girl_02"]
+      ];
+      this.walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
+      this.walk_girl.anchor.set(0.5);
+      this.walk_girl.x = this.app.view.width / 2 + 64;
+      this.walk_girl.y = this.app.view.height / 2;
+      this.walk_girl.animationSpeed = 0.05;
+      this.walk_girl.play();
+      this.app.stage.addChild(this.walk_girl);
+
+      // キーボードが押されたイベント
+      this.keyPressed = {};
+      document.addEventListener("keydown", this.handleKeyDown);
+      document.addEventListener("keyup", this.handleKeyUp);
+
+      // ゲームループを実装
+      this.app.ticker.add(delta => this.gameloop(delta));
+    },
+    /** キーダウン時処理 */
+    handleKeyDown: function(e) {
+      var key = e.key;
+      this.keyPressed[key] = true;
+    },
+    /** キーアップ時処理 */
+    handleKeyUp: function(e) {
+      var key = e.key;
+      this.keyPressed[key] = false;
+    },
+    /** ゲームループ本体 */
+    gameloop: function(delta) {
+      // 速度初期化
+      let vx = 0;
+      let vy = 0;
+      // 加速度定義
+      const ACCELERATION = 3;
+
+      // WASDのキー情報を確認して、速度を変更する。
+      if (this.keyPressed["w"]) {
+        vy -= ACCELERATION;
+      }
+      if (this.keyPressed["a"]) {
+        vx -= ACCELERATION;
+      }
+      if (this.keyPressed["s"]) {
+        vy += ACCELERATION;
+      }
+      if (this.keyPressed["d"]) {
+        vx += ACCELERATION;
+      }
+
+      // delta(前回実行時からの時間)と算出した速度をかけあわせて
+      // this.walk_girlを移動させる。
+      this.walk_girl.x += vx * delta;
+      this.walk_girl.y += vy * delta;
+    }
+  },
+```
+
+これまで同様にApp.vueに要素を追加するとこんな感じでWASDで動くセーラー少女が表示されるはずだ。
+
+![CharacterMovement01.gif](images/CharacterMovement01.gif)
+
+これだと横滑りしているだけで味気ないので、方向の概念を取り入れよう。
+
+### 方向概念の導入
+
+下記のコードを書き加えるとconsoleに移動方向に応じた方向が表示されるはずだ。
+
+``` vue:CharacterMovement.vue
+      // delta(前回実行時からの時間)と算出した速度をかけあわせて
+      // this.walk_girlを移動させる。
+      this.walk_girl.x += vx * delta;
+      this.walk_girl.y += vy * delta;
+
+      // 方向を計算する。
+      let direction = this.getDirection(vx, vy);
+      console.log(" dir:" + direction);
+    },
+    /** 方向計算用メソッド */
+    getDirection: function(vx, vy) {
+      if( vx === undefined || vy === undefined ) {
+        return undefined;
+      }
+      if( vx === 0 && vy === 0 ) {
+        return undefined;
+      }
+
+      let rad = Math.atan2(vy, vx);
+
+      if (rad <= - 7/8 * Math.PI || rad >= + 7/8 * Math.PI) {
+        return "left";
+      }
+      if (rad >= - 7/8 * Math.PI && rad <= - 5/8 * Math.PI) {
+        return "upleft";
+      }
+      if (rad >= - 5/8 * Math.PI && rad <= - 3/8 * Math.PI) {
+        return "up";
+      }
+      if (rad >= - 3/8 * Math.PI && rad <= - 1/8 * Math.PI) {
+        return "upright";
+      }
+      if (rad >= - 1/8 * Math.PI && rad <= + 1/8 * Math.PI) {
+        return "right";
+      }
+      if (rad >= + 1/8 * Math.PI && rad <= + 3/8 * Math.PI) {
+        return "downright";
+      }
+      if (rad >= + 3/8 * Math.PI && rad <= + 5/8 * Math.PI) {
+        return "down";
+      }
+      if (rad >= + 5/8 * Math.PI && rad <= + 7/8 * Math.PI) {
+        return "downleft";
+      }
+
+      throw "Unknown Error in getDirection";
+    }
+  },
+```
+
+getDirectionは移動方向に応じた方向を文字列で返すメソッドである。アークタンジェントを使った計算をしているので遅いかもしれない。必要があったら改良の余地があると思う。
+
+### 8方向のAnimatedSpriteを作成する
+
+次に8方向のAnimatedSpriteを作成する。下記のようにcreateDirectionSpritesメソッドとcreateAnimatedSpriteメソッドを追加しよう。
+
+``` vue:CharacterMovement.vue
+    /** AnimatedSpriteを作成して返す */
+    createAnimatedSprite: function(textureArray) {
+      let sprite = new PIXI.extras.AnimatedSprite(textureArray);
+      sprite.anchor.set(0.5);
+      sprite.animationSpeed = 0.05;
+      sprite.play();
+
+      return sprite;
+    },
+```
+
+createAnimatedSpriteはテスクチャ要素が入った配列オブジェクトを渡すとAnimatedSpriteに変換してくれるしろもの。AnimatedSprite生成時の共通処理をまとめる。
+
+``` vue:CharacterMovement.vue
+    /** 方向ごとのAnimatedSpriteを作成しHashで返す */
+    createDirectionSprites: function(textureHash) {
+      let spriteHash = {};
+
+      spriteHash["down"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_01"],
+        textureHash["sailor_girl_00"],
+        textureHash["sailor_girl_01"],
+        textureHash["sailor_girl_02"]
+      ]);
+
+      spriteHash["downleft"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_04"],
+        textureHash["sailor_girl_03"],
+        textureHash["sailor_girl_04"],
+        textureHash["sailor_girl_05"]
+      ]);
+
+      spriteHash["left"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_07"],
+        textureHash["sailor_girl_06"],
+        textureHash["sailor_girl_07"],
+        textureHash["sailor_girl_08"]
+      ]);
+
+      spriteHash["downright"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_10"],
+        textureHash["sailor_girl_09"],
+        textureHash["sailor_girl_10"],
+        textureHash["sailor_girl_11"]
+      ]);
+
+      spriteHash["right"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_13"],
+        textureHash["sailor_girl_12"],
+        textureHash["sailor_girl_13"],
+        textureHash["sailor_girl_14"]
+      ]);
+
+      spriteHash["upleft"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_16"],
+        textureHash["sailor_girl_15"],
+        textureHash["sailor_girl_16"],
+        textureHash["sailor_girl_17"]
+      ]);
+
+      spriteHash["up"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_19"],
+        textureHash["sailor_girl_18"],
+        textureHash["sailor_girl_19"],
+        textureHash["sailor_girl_20"]
+      ]);
+
+      spriteHash["upright"] = this.createAnimatedSprite([
+        textureHash["sailor_girl_22"],
+        textureHash["sailor_girl_21"],
+        textureHash["sailor_girl_22"],
+        textureHash["sailor_girl_23"]
+      ]);
+
+      return spriteHash;
+    },
+```
+
+createDirectionSpritesはSpritesheetのテクスチャハッシュオブジェクトを渡すと、8方向のAnimatedSpriteを方向をキーとしたハッシュオブジェクトに変換してくれる。コードが長いので関数化したが、そろそろファイル分割もしたいところ。
+
+これで8方向のAnimatedSpriteを作成する準備が整った。
+
+### SpriteをまとめるContainer
+
+8方向のAnimatedSpriteを使ったらこれらのSpriteをまとめるために、Containerを作成し関連づける。
+
+``` vue:CharacterMovement.vue
+    /** Spritesheet生成完了後の非同期処理 */
+    onSpritesheetLoaded: function(textures) {
+      // girl関連SpriteをまとめるContainerを作る
+      this.girlContainer = new PIXI.Container();
+
+      // 8方向セーラー少女を生成
+      this.girls = this.createDirectionSprites(textures);
+
+      // 8方向セーラー少女の位置を設定しContainerに追加する
+      let i = 0;
+      for (let key in this.girls) {
+        this.girls[key].x = 100 + i*64;
+        this.girls[key].y = this.app.view.height / 2;
+        this.girlContainer.addChild(this.girls[key]);
+        i += 1;
+      }
+
+      this.app.stage.addChild(this.girlContainer);
+
+      // キーボードが押されたイベント
+      this.keyPressed = {};
+      document.addEventListener("keydown", this.handleKeyDown);
+      document.addEventListener("keyup", this.handleKeyUp);
+
+      // ゲームループを実装
+      this.app.ticker.add(delta => this.gameloop(delta));
+    },
+```
+
+walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
+
+``` vue:CharacterMovement.vue
+      // delta(前回実行時からの時間)と算出した速度をかけあわせて
+      // this.girlContainerを移動させる。
+      this.girlContainer.x += vx * delta;
+      this.girlContainer.y += vy * delta;
+```
+
+ここまで実装すると、8方向のセーラー少女が画面に表示され、まとめてWASD移動できるようになっているはず。
+
+![CharacterMovement02.gif](images/CharacterMovement02.gif)
+
+### セーラー少女を歩かせる
+
+現在セーラー少女が向いている方向に合わせて、向いている方向のAnimatedSpriteだけを表示するようにする。
+
+``` vue:CharacterMovement.vue
+    /** Spritesheet生成完了後の非同期処理 */
+    onSpritesheetLoaded: function(textures) {
+      // girl関連SpriteをまとめるContainerを作る
+      this.girlContainer = new PIXI.Container();
+
+      // 8方向セーラー少女を生成
+      this.girls = this.createDirectionSprites(textures);
+      for (let key of Object.keys(this.girls)) {
+        this.girlContainer.addChild(this.girls[key]);
+      }
+      // 初期値としてdown方向を設定する
+      this.setDirection(this.girls, "down");
+
+      this.girlContainer.x = this.app.view.width / 2;
+      this.girlContainer.y = this.app.view.height / 2;
+      this.girlContainer.scale.x = 2;
+      this.girlContainer.scale.y = 2;
+
+      this.app.stage.addChild(this.girlContainer);
+
+      // キーボードが押されたイベント
+      this.keyPressed = {};
+      document.addEventListener("keydown", this.handleKeyDown);
+      document.addEventListener("keyup", this.handleKeyUp);
+
+      // ゲームループを実装
+      this.app.ticker.add(delta => this.gameloop(delta));
+    },
+```
+
+``` vue:CharacterMovement.vue
+      // delta(前回実行時からの時間)と算出した速度をかけあわせて
+      // this.girlContainerを移動させる。
+      this.girlContainer.x += vx * delta;
+      this.girlContainer.y += vy * delta;
+
+      // 方向を計算する。
+      let direction = this.getDirection(vx, vy);
+      if (direction) {
+        this.setDirection(this.girls, direction);
+      }
+    },
+```
+
+方向を設定するためのメソッドはsetDirectionとして新規作成した。
+
+``` vue:CharacterMovement.vue
+    /** 指定のAnimatedSpriteを表示する */
+    setDirection: function(spriteHash, direction) {
+      if (!spriteHash[direction]) {
+        console.warn("Undefined Key in SpriteHash. key:" + direction);
+        console.warn(spriteHash);
+        return;
+      }
+
+      // 全方向を一旦非表示にする
+      for (let key of Object.keys(spriteHash)) {
+        spriteHash[key].visible = false;
+      }
+      // 指定の方向だけ表示する
+      spriteHash[direction].visible = true;
+    }
+  },
+```
+
+![CharacterMovement03.gif](images/CharacterMovement03.gif)

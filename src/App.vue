@@ -6,6 +6,8 @@
     <MoveLogo />
     <h2>CharacterAnimation</h2>
     <CharacterAnimation />
+    <h2>CharacterMovement</h2>
+    <CharacterMovement />
   </div>
 </template>
 
@@ -13,13 +15,15 @@
 import HelloPixi from './components/HelloPixi.vue'
 import MoveLogo from './components/MoveLogo.vue'
 import CharacterAnimation from './components/CharacterAnimation.vue'
+import CharacterMovement from './components/CharacterMovement.vue'
 
 export default {
   name: 'app',
   components: {
     HelloPixi,
     MoveLogo,
-    CharacterAnimation
+    CharacterAnimation,
+    CharacterMovement
   }
 }
 </script>
