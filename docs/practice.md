@@ -83,6 +83,19 @@ App.vueのtemplateを下記のように書き換えて保存し、ロゴが消�
     <HelloWorld msg="Welcome to Your Pixi.js App"/>
   </div>
 </template>
+
+<script>
+import HelloPixi from './components/HelloPixi.vue'
+import MoveLogo from './components/MoveLogo.vue'
+
+export default {
+  name: 'app',
+  components: {
+    HelloPixi,
+    MoveLogo
+  }
+}
+</script>
 ```
 
 templateとscriptのHelloWorldをHelloPixiに書き換える。
