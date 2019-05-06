@@ -1,6 +1,6 @@
 # お勉強ノート
 
-Vue.js上でpixi.jsを用いたゲーム作りをするべく、プロジェクトを作成するところから順を追って説明する。
+Vue.js上でpixi.js v4を用いたゲーム作りをするべく、プロジェクトを作成するところから順を追って説明する。
 
 <!-- TOC depthFrom:2 -->
 
@@ -64,7 +64,7 @@ npm run serve
 ### pixi.jsインストール
 
 ``` bash
-npm install pixi.js
+npm install pixi.js@4
 ```
 
 ## はじめてのVue.js
