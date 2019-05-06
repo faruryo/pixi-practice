@@ -477,7 +477,7 @@ function handleKeyUp(e){
 
 // ゲームループで動かす関数
 function gameloop(delta, logo) {
-  console.log(’delta:’ + delta);
+  console.log('delta:' + delta);
   console.log(logo);
   console.log(keyPressed);
 }
