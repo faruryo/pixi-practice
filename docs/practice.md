@@ -36,6 +36,7 @@ Vue.js上でpixi.js v4を用いたゲーム作りをするべく、プロジェ�
     - [8方向のAnimatedSpriteを作成する](#8方向のanimatedspriteを作成する)
     - [SpriteをまとめるContainer](#spriteをまとめるcontainer)
     - [セーラー少女を歩かせる](#セーラー少女を歩かせる)
+- [セーラー少女リファクタリング](#セーラー少女リファクタリング)
 
 <!-- /TOC -->
 
@@ -1060,3 +1061,8 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 ```
 
 ![CharacterMovement03.gif](images/CharacterMovement03.gif)
+
+## セーラー少女リファクタリング
+
+セーラー少女をオブジェクト志向にリファクタリングしてみる。
+
