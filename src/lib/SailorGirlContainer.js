@@ -2,6 +2,10 @@ import * as PIXI from "pixi.js";
 import GirlSpritesJson from "@/assets/sailor_girl_sprites_tansio.json";
 import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 
+/**
+ * セーラー少女をまとめたクラス
+ * @extends PIXI.Container
+ */
 export default class SailorGirlContainer extends PIXI.Container {
 
   /**
@@ -21,7 +25,7 @@ export default class SailorGirlContainer extends PIXI.Container {
       const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
 
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
-      spritesheet.parse(textureHash => {
+      spritesheet.parse( (textureHash) => {
         // 8方向セーラー少女を生成
         this._girls = this._createDirectionSprites(textureHash);
         for (let key of Object.keys(this._girls)) {
@@ -146,8 +150,8 @@ export default class SailorGirlContainer extends PIXI.Container {
    * @param {Number} x x軸方向量
    * @param {Number} y y軸方向量
    */
-  setDirection(x, y) {
-    const direction = this.calculateDirection(x, y);
+  setDirectionFrom2D(x, y) {
+    const direction = this.calculateDirectionFrom2D(x, y);
     if (!direction) {
       return;
     }
@@ -159,7 +163,7 @@ export default class SailorGirlContainer extends PIXI.Container {
    * @param {*} x x軸方向量
    * @param {*} y y軸方向量
    */
-  calculateDirection(x, y) {
+  calculateDirectionFrom2D(x, y) {
     if (x === undefined || y === undefined) {
       return undefined;
     }

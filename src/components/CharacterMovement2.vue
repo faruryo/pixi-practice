@@ -65,7 +65,7 @@ export default {
       this.sailorGirl.y += vy * delta;
 
       // 方向を設定する。
-      this.sailorGirl.setDirection(vx, vy);
+      this.sailorGirl.setDirectionFrom2D(vx, vy);
     }
   },
   mounted: function() {
