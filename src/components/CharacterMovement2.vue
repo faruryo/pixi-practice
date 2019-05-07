@@ -7,7 +7,7 @@ import * as PIXI from "pixi.js";
 import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
 
 export default {
-  name: "CharacterMovement",
+  name: "CharacterMovement2",
   methods: {
     /** Spritesheet生成完了後の非同期処理 */
     onSailorGirlLoaded: function() {
