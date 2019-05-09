@@ -39,6 +39,7 @@ Vue.js上でpixi.js v4を用いたゲーム作りをするべく、プロジェ�
 - [セーラー少女リファクタリング](#セーラー少女リファクタリング)
     - [SailorGirlContainerのコンストラクタ](#sailorgirlcontainerのコンストラクタ)
     - [SailorGirlContainerのgetter/setter](#sailorgirlcontainerのgettersetter)
+- [移動速度と移動制限](#移動速度と移動制限)
 
 <!-- /TOC -->
 
@@ -1202,3 +1203,92 @@ getでは_directionを直接返しており、setではdirectionに関わる設
 ```
 
 このように`this.direction = direction;`がsetterを通ることになる。
+
+## 移動速度と移動制限
+
+斜め移動時に速度が上がってしまう問題と、画面外への移動制限をコーディングする。
+
+CharacterMovement2.vueをコピーしCharacterMovement3.vueファイルを作成し、4つの関数を編集追加する。
+
+gameloopは今後処理が増えるので、セーラー少女の移動を関数化する。
+
+``` javascript
+    /** ゲームループ本体 */
+    gameloop: function(delta) {
+      this.moveSailorGirl(delta);
+    },
+```
+
+斜め移動時処理は2次元ベクトルノルムを利用してベクトル正規化することで実装する。
+
+まず、移動速度ベクトルをX軸：vvx,Y軸vvyとし、そのノルムを計算した後、vvx,vvyをそれぞれをノルムで割ることで正規化している。
+
+画面外移動制限はcorrectMovingで実装する。
+
+``` javascript
+    /** セーラー少女の移動処理 */
+    moveSailorGirl: function(delta) {
+      // 加速度定義
+      const ACCELERATION = 3;
+
+      // 速度ベクトル初期化
+      let vvx = 0;
+      let vvy = 0;
+      // WASDのキー情報を確認して、速度ベクトルを変更する。
+      if (this.keyPressed["w"]) {
+        vvy -= 1;
+      }
+      if (this.keyPressed["a"]) {
+        vvx -= 1;
+      }
+      if (this.keyPressed["s"]) {
+        vvy += 1;
+      }
+      if (this.keyPressed["d"]) {
+        vvx += 1;
+      }
+
+      // 移動ベクトルノルムが0以上の場合に移動処理する
+      const norm = Math.hypot(vvx, vvy);
+      if (norm > 0) {
+        // 移動速度を計算する
+        const vx = (vvx / norm) * ACCELERATION * delta;
+        const vy = (vvy / norm) * ACCELERATION * delta;
+
+        // 新しい座標を計算する
+        let { newx, newy } = this.correctMoving(
+          this.sailorGirl.x+vx,
+          this.sailorGirl.y+vy
+        );
+
+        // セーラー少女
+        this.sailorGirl.x = newx;
+        this.sailorGirl.y = newy;
+
+        // 方向を設定する。
+        this.sailorGirl.setDirectionFrom2D(vx, vy);
+      }
+    },
+```
+
+correctMoving移動したい座標を受け取り、画面範囲に入る座標を作成して返す。
+
+``` javascript
+    /** 障害物等を考慮し座標を補正をする */
+    correctMoving: function(x, y) {
+      // 画面外に出ないようにする
+      const newx = this.fitInRange(x, 0+1, this.app.view.width-1);
+      const newy = this.fitInRange(y, 0+1, this.app.view.height-1);
+
+      return {newx, newy};
+    },
+```
+
+fitInRangeはcorrectMovingの補助関数として作成する。
+
+``` javascript
+    /** 第1引数を第2引数と第3引数の範囲に収めた値を返す */
+    fitInRange: function(num, minNum, maxNum) {
+      return Math.max(minNum, Math.min(maxNum, num));
+    }
+```
