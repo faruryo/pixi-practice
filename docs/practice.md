@@ -37,6 +37,8 @@ Vue.js上でpixi.js v4を用いたゲーム作りをするべく、プロジェ�
     - [SpriteをまとめるContainer](#spriteをまとめるcontainer)
     - [セーラー少女を歩かせる](#セーラー少女を歩かせる)
 - [セーラー少女リファクタリング](#セーラー少女リファクタリング)
+    - [SailorGirlContainerのコンストラクタ](#sailorgirlcontainerのコンストラクタ)
+    - [SailorGirlContainerのgetter/setter](#sailorgirlcontainerのgettersetter)
 
 <!-- /TOC -->
 
@@ -1066,3 +1068,137 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 
 セーラー少女をオブジェクト志向にリファクタリングしてみる。
 
+CharacterMovement.vueと同じように動作する[src/components/CharacterMovement2.vue](../src/components/CharacterMovement2.vue)を作成する。
+
+そして、セーラー少女の核となるSailorGirlContainerを[src/lib/SailorGirlContainer.js](../src/lib/SailorGirlContainer.js)に作成する。
+
+SailorGirlContainerを用いることでCharacterMovement2.vue側のセーラー少女に関する箇所は下記のコードのみとなり、コード行数としても1/3程度まで減らすことができる。
+
+``` vue:CharacterMovement2.vue
+<script>
+import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
+
+~~~~
+
+      this.sailorGirl.x = this.app.view.width / 2;
+      this.sailorGirl.y = this.app.view.height / 2;
+      this.sailorGirl.scale.x = 2;
+      this.sailorGirl.scale.y = 2;
+
+      this.app.stage.addChild(this.sailorGirl);
+
+~~~~
+      // delta(前回実行時からの時間)と算出した速度をかけあわせて
+      // this.sailorGirlを移動させる。
+      this.sailorGirl.x += vx * delta;
+      this.sailorGirl.y += vy * delta;
+
+      // 方向を設定する。
+      this.sailorGirl.setDirection(vx, vy);
+
+~~~~
+
+    this.sailorGirl = new SailorGirlContainer(this.onSailorGirlLoaded);
+  }
+};
+</script>
+```
+
+### SailorGirlContainerのコンストラクタ
+
+SailorGirlContainerのコンストラクタ部を説明する。
+
+``` javascript
+  /**
+   * @param {Function} onLoadedCallback
+   * リソース読み込みが完了した後に呼ばれるコールバック関数
+   */
+  constructor(onLoadedCallback) {
+    super();
+
+    /**
+     * @type {string} 8分割方向文字列
+     */
+    this._direction = "down";
+
+    // pngファイルを読み込む
+    PIXI.loader.add(GirlSpritesPng).load(() => {
+      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+
+      const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
+      spritesheet.parse(textureHash => {
+        // 8方向セーラー少女を生成
+        this._girls = this._createDirectionSprites(textureHash);
+        for (let key of Object.keys(this._girls)) {
+          this._girls[key].visible = false;
+          this.addChild(this._girls[key]);
+        }
+        // 初期値としてdown方向を設定する
+        this.direction = "down";
+
+        if (onLoadedCallback) {
+          onLoadedCallback();
+        }
+      });
+    });
+  }
+```
+
+コンストラクタでは継承元のPIXI.Containerのコンストラクタ呼び出しを行い、初期値設定、リソース読み込みまで実行している。
+
+JavaScriptにはPrivateなどのアクセス修飾子はないので、実際には外からでもアクセスできるが、伝統的に`this._direction`のようにアンダーバーから始まる変数や関数はprivateとして扱ってねという暗黙知がある。
+
+セーラー少女のリソース読み込み処理は、CharacterMovement.vueで
+
+1. pngファイル読み込み
+1. onAssetsLoaded
+1. onSpritesheetLoaded
+
+とコールバック関数チェーンとなっていたが、CharacterMovement2.vueではすべてSailorGirlContainerコンストラクタ内にまとめて記載している。
+
+また、onAssetsLoadedはアロー関数式`() => {}`の形で置き換えており、onSpritesheetLoadedはアロー関数式およびコンストラクタで渡したonLoadedCallbackを実行するところまでと同等である。
+
+動作の流れがコールバックチェーンであることに変わりはないので、newでコンストラクタが返った後にリソース読み込みが着々と実行されることには注意する。
+
+### SailorGirlContainerのgetter/setter
+
+JavaScriptではgetter/setterが簡単に定義できるので、メンバ変数directionはこれを利用している。
+
+``` javascript
+  get direction() {
+    return this._direction;
+  }
+
+  set direction(direction) {
+    if (!this._girls[direction]) {
+      console.warn("Undefined Key in SpriteHash. key:" + direction);
+      console.warn(this._girls);
+      return;
+    }
+
+    // 現在の方向を非表示にする
+    if (this.direction) {
+      this._girls[this.direction].visible = false;
+    }
+    // 指定の方向だけ表示する
+    this._girls[direction].visible = true;
+
+    this._direction = direction;
+  }
+```
+
+getでは_directionを直接返しており、setではdirectionに関わる設定変更をまとめて実施するようにしている。
+
+ただ、実際にdirectionのsetterが呼ばれているのはコンストラクタとsetDirectionFrom2Dの中だけで、vueファイルからはsetDirectionFrom2Dから間接的にdirectionを設定していることになる。
+
+``` javascript
+ setDirectionFrom2D(x, y) {
+    const direction = this.calculateDirectionFrom2D(x, y);
+    if (!direction) {
+      return;
+    }
+    this.direction = direction;
+  }
+```
+
+このように`this.direction = direction;`がsetterを通ることになる。
