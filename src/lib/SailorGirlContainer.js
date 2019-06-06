@@ -20,9 +20,11 @@ export default class SailorGirlContainer extends PIXI.Container {
      */
     this._direction = "down";
 
+    const loader = PIXI.Loader.shared;
+
     // pngファイルを読み込む
-    PIXI.loader.add(GirlSpritesPng).load(() => {
-      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+    loader.add(GirlSpritesPng).load(() => {
+      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
 
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
       spritesheet.parse( (textureHash) => {
@@ -69,7 +71,7 @@ export default class SailorGirlContainer extends PIXI.Container {
    */
   _createDirectionSprites(textureHash) {
     /**
-     * @type {Object.<string, PIXI.extras.AnimatedSprite>}
+     * @type {Object.<string, PIXI.AnimatedSprite>}
      */
     let spriteHash = {};
 
@@ -137,7 +139,7 @@ export default class SailorGirlContainer extends PIXI.Container {
    * @param {Array.<PIXI.Texture>} textureArray
    */
   _createAnimatedSprite(textureArray) {
-    let sprite = new PIXI.extras.AnimatedSprite(textureArray);
+    let sprite = new PIXI.AnimatedSprite(textureArray);
     sprite.anchor.set(0.5);
     sprite.animationSpeed = 0.05;
     sprite.play();

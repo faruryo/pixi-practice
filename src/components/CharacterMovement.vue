@@ -13,7 +13,7 @@ export default {
     /** Assetsデータ読み込み後の非同期処理 */
     onAssetsLoaded: function() {
       // 2.pngファイルを元にBaseTextureを生成する
-      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
       // 3.Spritesheetオブジェクトを生成開始する
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
       spritesheet.parse(this.onSpritesheetLoaded);
@@ -110,7 +110,7 @@ export default {
     },
     /** AnimatedSpriteを作成して返す */
     createAnimatedSprite: function(textureArray) {
-      let sprite = new PIXI.extras.AnimatedSprite(textureArray);
+      let sprite = new PIXI.AnimatedSprite(textureArray);
       sprite.anchor.set(0.5);
       sprite.animationSpeed = 0.05;
       sprite.play();
@@ -220,11 +220,13 @@ export default {
       backgroundColor: 0xdae8f4
     });
 
+    const loader = PIXI.Loader.shared;
+
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
-    PIXI.loader.reset();
+    loader.reset();
 
     // 1.pngファイルを読み込む
-    const loader = PIXI.loader.add(GirlSpritesPng);
+    loader.add(GirlSpritesPng);
     loader.load(this.onAssetsLoaded);
   }
 };

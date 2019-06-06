@@ -75,7 +75,7 @@ export default {
     });
 
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
-    PIXI.loader.reset();
+    PIXI.Loader.shared.reset();
 
     this.sailorGirl = new SailorGirlContainer(this.onSailorGirlLoaded);
   }

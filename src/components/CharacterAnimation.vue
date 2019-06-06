@@ -13,7 +13,7 @@ export default {
     /** Assetsデータ読み込み後の非同期処理 */
     onAssetsLoaded: function() {
       // 2.pngファイルを元にBaseTextureを生成する
-      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
       // 3.Spritesheetオブジェクトを生成開始する
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
       spritesheet.parse(this.onSpritesheetLoaded);
@@ -33,9 +33,9 @@ export default {
         textures["sailor_girl_01"],
         textures["sailor_girl_00"],
         textures["sailor_girl_01"],
-        textures["sailor_girl_02"],
+        textures["sailor_girl_02"]
       ];
-      let walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
+      let walk_girl = new PIXI.AnimatedSprite(downTextures);
       walk_girl.anchor.set(0.5);
       walk_girl.x = this.app.view.width / 2 + 64;
       walk_girl.y = this.app.view.height / 2;
@@ -47,14 +47,16 @@ export default {
   mounted: function() {
     this.app = new PIXI.Application({
       view: this.$el,
-      backgroundColor : 0xDAE8F4
+      backgroundColor: 0xdae8f4
     });
 
+    const loader = PIXI.Loader.shared;
+
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
-    PIXI.loader.reset();
+    loader.reset();
 
     // 1.pngファイルを読み込む
-    const loader = PIXI.loader.add(GirlSpritesPng);
+    loader.add(GirlSpritesPng);
     loader.load(this.onAssetsLoaded);
   }
 };

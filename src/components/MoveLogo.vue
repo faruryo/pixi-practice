@@ -17,7 +17,7 @@ export default {
     });
 
     // イメージを指定
-    let logo = PIXI.Sprite.fromImage(AssetsImageLogo);
+    let logo = PIXI.Sprite.from(AssetsImageLogo);
 
     // 画像のアンカーポイントの指定
     logo.anchor.set(0.5);

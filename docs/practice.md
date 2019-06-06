@@ -68,7 +68,7 @@ npm run serve
 ### pixi.jsインストール
 
 ``` bash
-npm install pixi.js@4
+npm install pixi.js@5
 ```
 
 ## はじめてのVue.js
@@ -199,7 +199,7 @@ export default {
     //------画像のアニメーション-----//
 
     // イメージを指定
-    let logo = PIXI.Sprite.fromImage(AssetsImageLogo);
+    let logo = PIXI.Sprite.from(AssetsImageLogo);
 
     // 画像のアンカーポイントの指定
     logo.anchor.set(0.5);
@@ -347,7 +347,7 @@ export default {
     });
 
     // イメージを指定
-    let logo = PIXI.Sprite.fromImage(AssetsImageLogo);
+    let logo = PIXI.Sprite.from(AssetsImageLogo);
 
     // 画像のアンカーポイントの指定
     logo.anchor.set(0.5);
@@ -622,7 +622,7 @@ export default {
     /** Assetsデータ読み込み後の非同期処理 */
     onAssetsLoaded: function() {
       // 2.pngファイルを元にBaseTextureを生成する
-      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
       // 3.Spritesheetオブジェクトを生成開始する
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
       spritesheet.parse(this.onSpritesheetLoaded);
@@ -712,7 +712,7 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
         textures["sailor_girl_01"],
         textures["sailor_girl_03"]
       ];
-      let walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
+      let walk_girl = new PIXI.AnimatedSprite(downTextures);
       walk_girl.anchor.set(0.5);
       walk_girl.x = this.app.view.width / 2 + 64;
       walk_girl.y = this.app.view.height / 2;
@@ -740,7 +740,7 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
         textures["sailor_girl_01"],
         textures["sailor_girl_02"]
       ];
-      this.walk_girl = new PIXI.extras.AnimatedSprite(downTextures);
+      this.walk_girl = new PIXI.AnimatedSprite(downTextures);
       this.walk_girl.anchor.set(0.5);
       this.walk_girl.x = this.app.view.width / 2 + 64;
       this.walk_girl.y = this.app.view.height / 2;
@@ -866,7 +866,7 @@ getDirectionは移動方向に応じた方向を文字列で返すメソッド�
 ``` javascript
     /** AnimatedSpriteを作成して返す */
     createAnimatedSprite: function(textureArray) {
-      let sprite = new PIXI.extras.AnimatedSprite(textureArray);
+      let sprite = new PIXI.AnimatedSprite(textureArray);
       sprite.anchor.set(0.5);
       sprite.animationSpeed = 0.05;
       sprite.play();
@@ -1124,7 +1124,7 @@ SailorGirlContainerのコンストラクタ部を説明する。
 
     // pngファイルを読み込む
     PIXI.loader.add(GirlSpritesPng).load(() => {
-      const baseTexture = PIXI.BaseTexture.fromImage(GirlSpritesPng);
+      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
 
       const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
       spritesheet.parse(textureHash => {
