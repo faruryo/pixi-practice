@@ -193,8 +193,12 @@ export default {
   },
   mounted () {
     // 表示するcanvasを用意
-    let app = new PIXI.Application(800, 600, {backgroundColor : 0xDAE8F4});
-    document.getElementById('stage').appendChild(app.view);
+    let app = new PIXI.Application({
+      width: 800,
+      height: 600,
+      backgroundColor: 0xdae8f4
+    });
+    document.getElementById("stage").appendChild(app.view);
 
     //------画像のアニメーション-----//
 

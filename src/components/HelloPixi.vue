@@ -16,8 +16,12 @@ export default {
   mounted () {
     //------画像のアニメーション-----//
     // 表示するcanvasを用意
-    let app = new PIXI.Application(800, 600, {backgroundColor : 0xDAE8F4});
-    document.getElementById('stage').appendChild(app.view);
+    let app = new PIXI.Application({
+      width: 800,
+      height: 600,
+      backgroundColor: 0xdae8f4
+    });
+    document.getElementById("stage").appendChild(app.view);
 
     // イメージを指定
     let logo = PIXI.Sprite.from(AssetsImageLogo);
@@ -34,8 +38,8 @@ export default {
 
     // アニメーションの再生、ループ
     app.ticker.add(function(delta) {
-        // 画像を回転
-        logo.rotation += 0.05 * delta;
+      // 画像を回転
+      logo.rotation += 0.05 * delta;
     });
 
     //------テキストの描画-----//
@@ -43,17 +47,17 @@ export default {
     // スタイルを指定
     let styleBig = new PIXI.TextStyle({
         fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
-        fontSize: 70,
+      fontSize: 70,
         align: 'center',
-        wordWrapWidth: 1000,
-        wordWrap: true
+      wordWrapWidth: 1000,
+      wordWrap: true
     });
     let styleSmall =  new PIXI.TextStyle({
         fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
-        fontSize: 40,
+      fontSize: 40,
         align: 'center',
-        wordWrapWidth: 1000,
-        wordWrap: true
+      wordWrapWidth: 1000,
+      wordWrap: true
     });
 
     // スタイルを反映
