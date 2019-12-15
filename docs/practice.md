@@ -1,61 +1,64 @@
 # お勉強ノート
 
-Vue.js上でpixi.js v5を用いたゲーム作りをするべく、プロジェクトを作成するところから順を追って説明する。
+Vue.js 上で pixi.js v5 を用いたゲーム作りをするべく、プロジェクトを作成するところから順を追って説明する。
 
 <!-- TOC depthFrom:2 -->
 
-- [プロジェクト準備](#プロジェクト準備)
-    - [vue-cliのインストール](#vue-cliのインストール)
-    - [プロジェクトを作成する](#プロジェクトを作成する)
-    - [pixi.jsインストール](#pixijsインストール)
-- [はじめてのVue.js](#はじめてのvuejs)
-    - [HelloPixi](#hellopixi)
-- [はじめてのPixi.js](#はじめてのpixijs)
-    - [不要なコードを削除する](#不要なコードを削除する)
-    - [import](#import)
-    - [logo.pngを表示して回転させてみる](#logopngを表示して回転させてみる)
-    - [文字を表示させてみる](#文字を表示させてみる)
-- [buildする](#buildする)
-    - [build](#build)
-    - [build資材を動かしてみる](#build資材を動かしてみる)
-- [キー入力でロゴを動かす](#キー入力でロゴを動かす)
-    - [キーボード入力を受け付ける](#キーボード入力を受け付ける)
-    - [Unexpected console statementの表示を止める](#unexpected-console-statementの表示を止める)
-    - [キーボード入力状態変数](#キーボード入力状態変数)
-    - [ゲームループを実装する](#ゲームループを実装する)
-    - [速度計算とロゴ移動](#速度計算とロゴ移動)
-- [キャラクターアニメーション](#キャラクターアニメーション)
-    - [キャラクター画像生成](#キャラクター画像生成)
-    - [Texture Atrasデータ作成](#texture-atrasデータ作成)
-    - [(おまけ)Texture Atrasデータ作成 もう一つのやり方](#おまけtexture-atrasデータ作成-もう一つのやり方)
-    - [Texture Atras形式で画像読み込み](#texture-atras形式で画像読み込み)
-    - [AnimatedSpriteでキャラクターアニメーション](#animatedspriteでキャラクターアニメーション)
-- [キャラクターを歩かせてみる](#キャラクターを歩かせてみる)
-    - [セーラー少女を動かしてみる](#セーラー少女を動かしてみる)
-    - [方向概念の導入](#方向概念の導入)
-    - [8方向のAnimatedSpriteを作成する](#8方向のanimatedspriteを作成する)
-    - [SpriteをまとめるContainer](#spriteをまとめるcontainer)
-    - [セーラー少女を歩かせる](#セーラー少女を歩かせる)
-- [セーラー少女リファクタリング](#セーラー少女リファクタリング)
-    - [SailorGirlContainerのコンストラクタ](#sailorgirlcontainerのコンストラクタ)
-    - [SailorGirlContainerのgetter/setter](#sailorgirlcontainerのgettersetter)
-- [移動速度と移動制限](#移動速度と移動制限)
+- [1. プロジェクト準備](#1-プロジェクト準備)
+  - [1.1. vue-cli のインストール](#11-vue-cli-のインストール)
+  - [1.2. プロジェクトを作成する](#12-プロジェクトを作成する)
+  - [1.3. pixi.js インストール](#13-pixijs-インストール)
+- [2. はじめての Vue.js](#2-はじめての-vuejs)
+  - [2.1. HelloPixi](#21-hellopixi)
+- [3. はじめての Pixi.js](#3-はじめての-pixijs)
+  - [3.1. 不要なコードを削除する](#31-不要なコードを削除する)
+  - [3.2. import](#32-import)
+  - [3.3. logo.png を表示して回転させてみる](#33-logopng-を表示して回転させてみる)
+  - [3.4. 文字を表示させてみる](#34-文字を表示させてみる)
+- [4. build する](#4-build-する)
+  - [4.1. build](#41-build)
+  - [4.2. build 資材を動かしてみる](#42-build-資材を動かしてみる)
+- [5. キー入力でロゴを動かす](#5-キー入力でロゴを動かす)
+  - [5.1. キーボード入力を受け付ける](#51-キーボード入力を受け付ける)
+  - [5.2. Unexpected console statement の表示を止める](#52-unexpected-console-statement-の表示を止める)
+  - [5.3. キーボード入力状態変数](#53-キーボード入力状態変数)
+  - [5.4. ゲームループを実装する](#54-ゲームループを実装する)
+  - [5.5. 速度計算とロゴ移動](#55-速度計算とロゴ移動)
+- [6. キャラクターアニメーション](#6-キャラクターアニメーション)
+  - [6.1. キャラクター画像生成](#61-キャラクター画像生成)
+  - [6.2. Texture Atras データ作成](#62-texture-atras-データ作成)
+  - [6.3. (おまけ)Texture Atras データ作成 もう一つのやり方](#63-おまけtexture-atras-データ作成-もう一つのやり方)
+  - [6.4. Texture Atras 形式で画像読み込み](#64-texture-atras-形式で画像読み込み)
+  - [6.5. AnimatedSprite でキャラクターアニメーション](#65-animatedsprite-でキャラクターアニメーション)
+- [7. キャラクターを歩かせてみる](#7-キャラクターを歩かせてみる)
+  - [7.1. セーラー少女を動かしてみる](#71-セーラー少女を動かしてみる)
+  - [7.2. 方向概念の導入](#72-方向概念の導入)
+  - [7.3. 方向の AnimatedSprite を作成する](#73-方向の-animatedsprite-を作成する)
+  - [7.4. Sprite をまとめる Container](#74-sprite-をまとめる-container)
+  - [7.5. セーラー少女を歩かせる](#75-セーラー少女を歩かせる)
+- [8. セーラー少女リファクタリング](#8-セーラー少女リファクタリング)
+  - [8.1. SailorGirlContainer のコンストラクタ](#81-sailorgirlcontainer-のコンストラクタ)
+  - [8.2. SailorGirlContainer の getter/setter](#82-sailorgirlcontainer-の-gettersetter)
+- [9. 移動速度と移動制限](#9-移動速度と移動制限)
+- [10. Vue Router](#10-vue-router)
+- [11. 攻撃エフェクトアニメーション](#11-攻撃エフェクトアニメーション)
+  - [11.1. 攻撃エフェクト素材準備](#111-攻撃エフェクト素材準備)
 
 <!-- /TOC -->
 
-## プロジェクト準備
+## 1. プロジェクト準備
 
 参考：[Vue.js を vue-cli を使ってシンプルにはじめてみる](https://qiita.com/567000/items/dde495d6a8ad1c25fa43)
 
-### vue-cliのインストール
+### 1.1. vue-cli のインストール
 
-``` bash
+```bash
 npm install -g @vue/cli
 ```
 
-### プロジェクトを作成する
+### 1.2. プロジェクトを作成する
 
-``` bash
+```bash
 vue create pixi-practice
 > default
 
@@ -65,97 +68,97 @@ npm run serve
 
 ブラウザで <http://localhost:8080/> にアクセスするとサンプルが表示されるはずなので確認しておく。
 
-### pixi.jsインストール
+### 1.3. pixi.js インストール
 
-``` bash
+```bash
 npm install pixi.js@5
 ```
 
-## はじめてのVue.js
+## 2. はじめての Vue.js
 
-Vue.jsのファイル構成がわかるようにファイルを変更していく。
+Vue.js のファイル構成がわかるようにファイルを変更していく。
 
 関連ファイルを保存すると <http://localhost:8080/> が更新されるはずなので、ファイルの一文言を変更するたびにファイルを保存して動作を確認すると理解が早い。
 
-### HelloPixi
+### 2.1. HelloPixi
 
-App.vueのtemplateを下記のように書き換えて保存し、ロゴが消え、文言が変わることを確認する。
+App.vue の template を下記のように書き換えて保存し、ロゴが消え、文言が変わることを確認する。
 
-``` vue:App.vue
+```vue:App.vue
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Pixi.js App"/>
+    <HelloWorld msg="Welcome to Your Pixi.js App" />
   </div>
 </template>
 
 <script>
-import HelloPixi from './components/HelloPixi.vue'
-import MoveLogo from './components/MoveLogo.vue'
+import HelloPixi from "./components/HelloPixi.vue";
+import MoveLogo from "./components/MoveLogo.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     HelloPixi,
     MoveLogo
   }
-}
+};
 </script>
 ```
 
-templateとscriptのHelloWorldをHelloPixiに書き換える。
+template と script の HelloWorld を HelloPixi に書き換える。
 
-``` vue:App.vue
+```vue:App.vue
 <template>
   <div id="app">
-    <HelloPixi msg="Welcome to Your Pixi.js App"/>
+    <HelloPixi msg="Welcome to Your Pixi.js App" />
   </div>
 </template>
 
 <script>
-import HelloPixi from './components/HelloWorld.vue'
+import HelloPixi from "./components/HelloWorld.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     HelloPixi
   }
-}
+};
 </script>
 ```
 
-scriptのHelloWorld.vueをHelloPixi.vueに書き換え、ブラウザエラーもしくは何も表示されなくなることを確認する。
+script の HelloWorld.vue を HelloPixi.vue に書き換え、ブラウザエラーもしくは何も表示されなくなることを確認する。
 
-``` vue:App.vue
+```vue:App.vue
 <script>
 import HelloPixi from './components/HelloPixi.vue'
 ```
 
-ファイル名HelloWorld.vueをHelloPixi.vueに書き換えるとブラウザ表示されるはず。
+ファイル名 HelloWorld.vue を HelloPixi.vue に書き換えるとブラウザ表示されるはず。
 
-念の為HelloPixi.vueの下記Script部分もHelloWorldをHelloPixiに書き換える。
+念の為 HelloPixi.vue の下記 Script 部分も HelloWorld を HelloPixi に書き換える。
 
-``` vue:HelloPixi.vue
+```vue:HelloPixi.vue
 <script>
 export default {
-  name: 'HelloPixi',
+  name: "HelloPixi",
   props: {
     msg: String
   }
-}
+};
 </script>
 ```
 
-## はじめてのPixi.js
+## 3. はじめての Pixi.js
 
 - 参考
-  - [Pixi.jsでCanvasをカンタンに触ってみよう！](https://liginc.co.jp/398188)
+  - [Pixi.js で Canvas をカンタンに触ってみよう！](https://liginc.co.jp/398188)
   - [Pixi.js でゲームを作ってみる vol.1](https://ryo620.org/2016/12/pixijs-game-01/)
 
-### 不要なコードを削除する
+### 3.1. 不要なコードを削除する
 
-HelloPixi.vueのtemplateとstyleを色々削除しておく。
+HelloPixi.vue の template と style を色々削除しておく。
 
-``` vue:HelloPixi.vue
+```vue:HelloPixi.vue
 <template>
   <div class="hello">
     <div class="stage" id="stage"></div>
@@ -163,35 +166,34 @@ HelloPixi.vueのtemplateとstyleを色々削除しておく。
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
 ```
 
-### import
+### 3.2. import
 
-HelloPixi.vueのscriptの冒頭に下記を記載する。
+HelloPixi.vue の script の冒頭に下記を記載する。
 
-1行目でpixi.js読み込みで、2行目は今回のサンプルで利用するlogo.pngを利用する準備。これらのファイルを利用することをvue-cliに教えておくおことで、vue-cliでバンドルする際にパス関連等をうまく調整してくれる。
+1 行目で pixi.js 読み込みで、2 行目は今回のサンプルで利用する logo.png を利用する準備。これらのファイルを利用することを vue-cli に教えておくおことで、vue-cli でバンドルする際にパス関連等をうまく調整してくれる。
 
-``` vue:HelloPixi.vue
+```vue:HelloPixi.vue
 <script>
 import * as PIXI from 'pixi.js';
 import AssetsImageLogo from "@/assets/logo.png";
 ```
 
-参考：[Vue.jsでの画像指定方法を間違ってたので、振り返る](https://qiita.com/skmtko/items/a83f836b48f24309916d)
+参考：[Vue.js での画像指定方法を間違ってたので、振り返る](https://qiita.com/skmtko/items/a83f836b48f24309916d)
 
-### logo.pngを表示して回転させてみる
+### 3.3. logo.png を表示して回転させてみる
 
-HelloPixi.vueのscriptの`export default`の部分を書き換えて、Vue.jsのロゴを回転させてみる。
+HelloPixi.vue の script の`export default`の部分を書き換えて、Vue.js のロゴを回転させてみる。
 
-``` javascript
+```javascript
 export default {
-  name: 'HelloPixi',
+  name: "HelloPixi",
   props: {
     msg: String
   },
-  mounted () {
+  mounted() {
     // 表示するcanvasを用意
     let app = new PIXI.Application({
       width: 800,
@@ -217,18 +219,18 @@ export default {
 
     // アニメーションの再生、ループ
     app.ticker.add(function(delta) {
-        // 画像を回転
-        logo.rotation += 0.05 * delta;
+      // 画像を回転
+      logo.rotation += 0.05 * delta;
     });
   }
-}
+};
 ```
 
-### 文字を表示させてみる
+### 3.4. 文字を表示させてみる
 
-さらにscript部分を書き換えて文字を表示させてみる。
+さらに script 部分を書き換えて文字を表示させてみる。
 
-``` javascript
+```javascript
     // アニメーションの再生、ループ
     app.ticker.add(function(delta) {
         // 画像を回転
@@ -274,39 +276,39 @@ export default {
 </script>
 ```
 
-textSmall初期化部を下記のように`this.msg`を渡してみると、App.vueのtemplate内の`<HelloPixi msg="Welcome to Your Pixi.js App"/>`で渡した文字が表示できる。
+textSmall 初期化部を下記のように`this.msg`を渡してみると、App.vue の template 内の`<HelloPixi msg="Welcome to Your Pixi.js App"/>`で渡した文字が表示できる。
 
-``` vue:HelloPixi.vue
-    let textSmall = new PIXI.Text(this.msg, styleSmall);
+```vue:HelloPixi.vue
+let textSmall = new PIXI.Text(this.msg, styleSmall);
 ```
 
-## buildする
+## 4. build する
 
-### build
+### 4.1. build
 
-``` bash
+```bash
 npm run build
 ```
 
-ファイルサイズがどうとかというWarningが出てくるかもしれないが、とりあえず動くのでここでは触れない。
+ファイルサイズがどうとかという Warning が出てくるかもしれないが、とりあえず動くのでここでは触れない。
 
-デフォルトだとdistディレクトリにビルド結果のファイルを置かれているので確認してみる。
+デフォルトだと dist ディレクトリにビルド結果のファイルを置かれているので確認してみる。
 
-``` bash
+```bash
 ls -lt dist
 ```
 
-### build資材を動かしてみる
+### 4.2. build 資材を動かしてみる
 
 お試し動作コマンドをインストールする。
 
-``` bash
+```bash
 npm install -g serve
 ```
 
 お試し動作させてみる。
 
-``` bash
+```bash
 $ serve -s dist
 
    ┌──────────────────────────────────────────────────┐
@@ -323,15 +325,15 @@ $ serve -s dist
 
 ブラウザで <http://localhost:5000> にアクセスするとさっきと同じように動いているのが確認できるはず
 
-## キー入力でロゴを動かす
+## 5. キー入力でロゴを動かす
 
-PCゲーマーならお馴染みのWASDを使ったキーボード入力を実装してみる。
+PC ゲーマーならお馴染みの WASD を使ったキーボード入力を実装してみる。
 
-### キーボード入力を受け付ける
+### 5.1. キーボード入力を受け付ける
 
-src/components/MoveLogo.vueを作成し、下記の通り入力する。
+src/components/MoveLogo.vue を作成し、下記の通り入力する。
 
-``` vue:MoveLogo.vue
+```vue:MoveLogo.vue
 <template>
   <canvas width="800" height="600"></canvas>
 </template>
@@ -347,7 +349,7 @@ export default {
     // 表示するcanvasを用意
     const app = new PIXI.Application({
       view: this.$el,
-      backgroundColor : 0xDAE8F4
+      backgroundColor: 0xdae8f4
     });
 
     // イメージを指定
@@ -363,36 +365,35 @@ export default {
     // ステージに表示させる
     app.stage.addChild(logo);
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
 ```
 
 - 参考
   - [Canvas の組み込み | 基礎から学ぶ Vue.js](https://cr-vue.mio3io.com/examples/canvas.html)
-  - [Pixi.js v4で自前のcanvas使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
+  - [Pixi.js v4 で自前の canvas 使う](https://qiita.com/zuya/items/9d5071bba4d98e4d4a9f)
 
-このままでは画面に表示されないので、App.vueのtemplateに下記のように書き加えるとVue.jsのロゴが表示される。
+このままでは画面に表示されないので、App.vue の template に下記のように書き加えると Vue.js のロゴが表示される。
 
-``` vue:App.vue
+```vue:App.vue
 <template>
   <div id="app">
     <h2>HelloPixi</h2>
-    <HelloPixi msg="Welcome to Your Pixi.js App"/>
+    <HelloPixi msg="Welcome to Your Pixi.js App" />
     <h2>MoveLogo</h2>
     <MoveLogo />
   </div>
 </template>
 ```
 
-次に、MoveLogo.vueにキーボードリスナを登録し、キーボード入力をconsoleに表示してみる。
+次に、MoveLogo.vue にキーボードリスナを登録し、キーボード入力を console に表示してみる。
 
-今回使ったのはkeydownイベントとkeyupイベントなので、キーボードを押したタイミングと話したタイミングでconsoleに対応するキー名が表示される。
+今回使ったのは keydown イベントと keyup イベントなので、キーボードを押したタイミングと話したタイミングで console に対応するキー名が表示される。
 
-``` javascript
+```javascript
     // ステージに表示させる
     app.stage.addChild(logo);
 
@@ -414,29 +415,29 @@ function handleKeyUp(e){
 </script>
 ```
 
-### Unexpected console statementの表示を止める
+### 5.2. Unexpected console statement の表示を止める
 
-上記のコード入力を保存したところでconsoleが未定義というeslintのエラーが出るが、問題なく動くので設定を変更しておく。
+上記のコード入力を保存したところで console が未定義という eslint のエラーが出るが、問題なく動くので設定を変更しておく。
 
-いろいろな設定方法があるみたいだけど、package.jsonに書いておくのがスマートそう。
+いろいろな設定方法があるみたいだけど、package.json に書いておくのがスマートそう。
 
-``` json:package.json
+```json:package.json
     "rules": {
       "no-console": "off"
     },
 ```
 
-保存した後にnpm run serveをCtrl+Cで停止したあともう一度実行するとエラーが出ないはず。
+保存した後に npm run serve を Ctrl+C で停止したあともう一度実行するとエラーが出ないはず。
 
 - 参考
-  - [Step by Stepで始めるESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
+  - [Step by Step で始める ESLint](https://qiita.com/howdy39/items/6e2c75861bc5a14b2acf)
   - [Configuration Reference | Vue CLI](https://cli.vuejs.org/config/#eslint)
 
-### キーボード入力状態変数
+### 5.3. キーボード入力状態変数
 
 ゲームでキーの入力状態を利用するために、`keyPressed`変数を作成する。
 
-``` javascript
+```javascript
 let keyPressed = {};
 
 function handleKeyDown(e){
@@ -453,14 +454,14 @@ function handleKeyUp(e){
 </script>
 ```
 
-keyPressedによってユーザがどのキーを押しているのかがわかり、複数キー同時押し状態にも対応できる。
+keyPressed によってユーザがどのキーを押しているのかがわかり、複数キー同時押し状態にも対応できる。
 
-### ゲームループを実装する
+### 5.4. ゲームループを実装する
 
-ゲームループを実装する。これでconsoleにgameloop中の変数が出力される。
-ついでに、handleKeyのconsoleも削除しておく。
+ゲームループを実装する。これで console に gameloop 中の変数が出力される。
+ついでに、handleKey の console も削除しておく。
 
-``` javascript
+```javascript
     // キーボードが押されたイベント
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
@@ -492,11 +493,11 @@ function gameloop(delta, logo) {
 </script>
 ```
 
-### 速度計算とロゴ移動
+### 5.5. 速度計算とロゴ移動
 
-このgameloop function内でkeyPressedを利用して、logoの位置を移動できるように変更する。
+この gameloop function 内で keyPressed を利用して、logo の位置を移動できるように変更する。
 
-``` javascript
+```javascript
 // ゲームループで動かす関数
 function gameloop(delta, logo) {
   // 速度初期化
@@ -527,31 +528,31 @@ function gameloop(delta, logo) {
 </script>
 ```
 
-## キャラクターアニメーション
+## 6. キャラクターアニメーション
 
 主に、[Pixi.js でゲームを作ってみる vol.1](https://ryo620.org/2016/12/pixijs-game-01/)を参考にしてキャラクターを表示してアニメーションさせてみる。
 
-### キャラクター画像生成
+### 6.1. キャラクター画像生成
 
-[WOLF RPGエディターのダウンロード](http://www.silversecond.com/WolfRPGEditor/Download.html)からグラフィック合成器をダウンロードして利用する。
+[WOLF RPG エディターのダウンロード](http://www.silversecond.com/WolfRPGEditor/Download.html)からグラフィック合成器をダウンロードして利用する。
 
-Windowsしか対応していないので注意。。。
+Windows しか対応していないので注意。。。
 
 こんな感じでセーラー服少女を用意してみた。画像セットをデフォルト企画　大にしたのは、ある程度解像度が欲しかったから。
 
 ![グラフィック合成器](images/graphic_gouseiki.png)
 
-src/assets/sailor_girl.pngに画像データを保存する。
+src/assets/sailor_girl.png に画像データを保存する。
 
-### Texture Atrasデータ作成
+### 6.2. Texture Atras データ作成
 
-たんしおレモンさんのサイトの[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)を利用して作成したキャラクター画像からTexture Atras形式のデータを生成する。
+たんしおレモンさんのサイトの[Pixi.js のスプライト json ファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)を利用して作成したキャラクター画像から Texture Atras 形式のデータを生成する。
 
-まずsrc/assets/sailor_girl.pngをsrc/assets/sailor_girl_sprites_tansio.pngにコピーしておこう。
+まず src/assets/sailor_girl.png を src/assets/sailor_girl_sprites_tansio.png にコピーしておこう。
 
-つぎにsrc/assets/sailor_girl_sprites_tansio.jsonをテキストファイルとして生成しておく。
+つぎに src/assets/sailor_girl_sprites_tansio.json をテキストファイルとして生成しておく。
 
-[Pixi.jsのスプライトjsonファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)をブラウザで表示して、下記の通り入力してから生成ボタンを押す。
+[Pixi.js のスプライト json ファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)をブラウザで表示して、下記の通り入力してから生成ボタンを押す。
 
 ```form
 ファイル名：sailor_girl_sprites_tansio.png
@@ -564,11 +565,11 @@ src/assets/sailor_girl.pngに画像データを保存する。
 パディング：0
 ```
 
-下部フォームにjson情報が生成されるので、そのデータをsailor_girl_sprites_tansio.jsonに入力する。
+下部フォームに json 情報が生成されるので、そのデータを sailor_girl_sprites_tansio.json に入力する。
 
-### (おまけ)Texture Atrasデータ作成 もう一つのやり方
+### 6.3. (おまけ)Texture Atras データ作成 もう一つのやり方
 
-[ShoeBox](http://renderhjs.net/shoebox/)というツールを使い、作成したキャラクター画像からTexture Atras形式のデータを生成することもできる。
+[ShoeBox](http://renderhjs.net/shoebox/)というツールを使い、作成したキャラクター画像から Texture Atras 形式のデータを生成することもできる。
 
 たんしおさんツールで作成した時と比べ、画像サイズが最小になって良かったりもするのだが、余白がすべて削り取られることにより、アニメーション位置がずれるので調整が必要になるので、アニメーションする場合は注意を要する。
 
@@ -576,27 +577,27 @@ src/assets/sailor_girl.pngに画像データを保存する。
 
 ![ShoeBox Home](images/shoebox_home.png)
 
-先ほど保存したsailor_girl.pngをExtract Spritesにドラッグ&ドロップし、Saveを押す。
+先ほど保存した sailor_girl.png を Extract Sprites にドラッグ&ドロップし、Save を押す。
 
 ![ShoeBox Extract Sprites](images/shoebox_extract_sprites.png)
 ![ShoeBox Extract Sprites Settings](images/shoebox_extract_sprites_settings.png)
 
-上記を実行するとsailor_girl_01~24.pngとsailor_girl.png.txtが作成されるので、これらのファイルを全て選択してSprite Sheetにドラッグ&ドロップする。
+上記を実行すると sailor_girl_01~24.png と sailor_girl.png.txt が作成されるので、これらのファイルを全て選択して Sprite Sheet にドラッグ&ドロップする。
 
-Settingsボタンを押し、Sprite Sheet Settings画面のTemplateでpixi.jsを選択し、Applyを押してからSaveを押すと、sprites.jsとsprites.pngが作成される。
+Settings ボタンを押し、Sprite Sheet Settings 画面の Template で pixi.js を選択し、Apply を押してから Save を押すと、sprites.js と sprites.png が作成される。
 
 ![ShoeBox Sprite Sheet](images/shoebox_sprite_sheet.png)
 ![ShoeBox Sprite Sheet Settings](images/shoebox_sprite_sheet_settings.png)
 
-pngファイルは見ての通り全ての画像を合体した一つのファイルになっていて、jsonファイルは個々の画像をpngファイルのどこにあるかなどをまとめた形になっている。
+png ファイルは見ての通り全ての画像を合体した一つのファイルになっていて、json ファイルは個々の画像を png ファイルのどこにあるかなどをまとめた形になっている。
 
 なので、順番や位置がぐちゃってるけど気にしない。
 
-sprites.jsはsailor_girl_sprites_shoebox.jsonに、sprites.pngはsailor_girl_sprites_shoebox.pngに命名変更する。
+sprites.js は sailor_girl_sprites_shoebox.json に、sprites.png は sailor_girl_sprites_shoebox.png に命名変更する。
 
-jsonファイルの中にもファイル名が書かれているので、sailor_girl_sprites_shoebox.jsonのmeta情報も変更する。
+json ファイルの中にもファイル名が書かれているので、sailor_girl_sprites_shoebox.json の meta 情報も変更する。
 
-``` json:sailor_girl_sprites_shoebox.json
+```json:sailor_girl_sprites_shoebox.json
   "meta": {
     "image": "sailor_girl_sprites_shoebox.png",
       "size": { "w": 172, "h": 152 },
@@ -604,13 +605,13 @@ jsonファイルの中にもファイル名が書かれているので、sailor_
   }
 ```
 
-sailor_girl_01~24.pngとsailor_girl.png.txtは不要になるので削除する。
+sailor_girl_01~24.png と sailor_girl.png.txt は不要になるので削除する。
 
-### Texture Atras形式で画像読み込み
+### 6.4. Texture Atras 形式で画像読み込み
 
-下記の通り、src/components/CharacterAnimation.vueを新しく作成する。
+下記の通り、src/components/CharacterAnimation.vue を新しく作成する。
 
-``` vue:CharacterAnimation.vue
+```vue:CharacterAnimation.vue
 <template>
   <canvas width="800" height="600"></canvas>
 </template>
@@ -645,7 +646,7 @@ export default {
   mounted: function() {
     this.app = new PIXI.Application({
       view: this.$el,
-      backgroundColor : 0xDAE8F4
+      backgroundColor: 0xdae8f4
     });
 
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
@@ -659,17 +660,16 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
 ```
 
-App.vueに作成したCharacterAnimationを記述して画面表示してみよう。
+App.vue に作成した CharacterAnimation を記述して画面表示してみよう。
 
-``` vue:App.vue
+```vue:App.vue
 <template>
   <div id="app">
     <h2>HelloPixi</h2>
-    <HelloPixi msg="Welcome to Your Pixi.js App"/>
+    <HelloPixi msg="Welcome to Your Pixi.js App" />
     <h2>MoveLogo</h2>
     <MoveLogo />
     <h2>CharacterAnimation</h2>
@@ -678,30 +678,31 @@ App.vueに作成したCharacterAnimationを記述して画面表示してみよ�
 </template>
 
 <script>
-import HelloPixi from './components/HelloPixi.vue'
-import MoveLogo from './components/MoveLogo.vue'
-import CharacterAnimation from './components/CharacterAnimation.vue'
+import HelloPixi from "./components/HelloPixi.vue";
+import MoveLogo from "./components/MoveLogo.vue";
+import CharacterAnimation from "./components/CharacterAnimation.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     HelloPixi,
     MoveLogo,
     CharacterAnimation
   }
-}
+};
 </script>
 ```
 
 - 参考
+
   - [Refactors the spritesheet, texture and bitmap font loaders by bigtimebuddy · Pull Request #3676 · pixijs/pixi.js](https://github.com/pixijs/pixi.js/pull/3676)
   - [Reloading a spritesheet · Issue #2419 · pixijs/pixi.js](https://github.com/pixijs/pixi.js/issues/2419)
-  
-### AnimatedSpriteでキャラクターアニメーション
 
-onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー服少女を表示してみよう。
+### 6.5. AnimatedSprite でキャラクターアニメーション
 
-``` javascript
+onSpritesheetLoaded に下記の通りコードを追記して歩くセーラー服少女を表示してみよう。
+
+```javascript
     onSpritesheetLoaded: function(textures) {
       // 4.テクスチャを取り出す
       let texture = textures["sailor_girl_01"];
@@ -727,15 +728,15 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
   },
 ```
 
-## キャラクターを歩かせてみる
+## 7. キャラクターを歩かせてみる
 
-### セーラー少女を動かしてみる
+### 7.1. セーラー少女を動かしてみる
 
 まずは[キー入力でロゴを動かす](#キー入力でロゴを動かす)と[キャラクターアニメーション](#キャラクターアニメーション)を組み合わせてアニメーションさせたセーラー少女を動かしてみよう。
 
-例のごとくCharacterMovement.vueを新しく作成する。一部だけ示すとこんな感じになるだろう。
+例のごとく CharacterMovement.vue を新しく作成する。一部だけ示すとこんな感じになるだろう。
 
-``` javascript
+```javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       let downTextures = [
@@ -800,17 +801,17 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
   },
 ```
 
-これまで同様にApp.vueに要素を追加するとこんな感じでWASDで動くセーラー少女が表示されるはずだ。
+これまで同様に App.vue に要素を追加するとこんな感じで WASD で動くセーラー少女が表示されるはずだ。
 
 ![CharacterMovement01.gif](images/CharacterMovement01.gif)
 
 これだと横滑りしているだけで味気ないので、方向の概念を取り入れよう。
 
-### 方向概念の導入
+### 7.2. 方向概念の導入
 
-下記のコードを書き加えるとconsoleに移動方向に応じた方向が表示されるはずだ。
+下記のコードを書き加えると console に移動方向に応じた方向が表示されるはずだ。
 
-``` javascript
+```javascript
       // delta(前回実行時からの時間)と算出した速度をかけあわせて
       // this.walk_girlを移動させる。
       this.walk_girl.x += vx * delta;
@@ -861,13 +862,13 @@ onSpritesheetLoadedに下記の通りコードを追記して歩くセーラー�
   },
 ```
 
-getDirectionは移動方向に応じた方向を文字列で返すメソッドである。アークタンジェントを使った計算をしているので遅いかもしれない。必要があったら改良の余地があると思う。
+getDirection は移動方向に応じた方向を文字列で返すメソッドである。アークタンジェントを使った計算をしているので遅いかもしれない。必要があったら改良の余地があると思う。
 
-### 8方向のAnimatedSpriteを作成する
+### 7.3. 方向の AnimatedSprite を作成する
 
-次に8方向のAnimatedSpriteを作成する。下記のようにcreateDirectionSpritesメソッドとcreateAnimatedSpriteメソッドを追加しよう。
+次に 8 方向の AnimatedSprite を作成する。下記のように createDirectionSprites メソッドと createAnimatedSprite メソッドを追加しよう。
 
-``` javascript
+```javascript
     /** AnimatedSpriteを作成して返す */
     createAnimatedSprite: function(textureArray) {
       let sprite = new PIXI.AnimatedSprite(textureArray);
@@ -879,9 +880,9 @@ getDirectionは移動方向に応じた方向を文字列で返すメソッド�
     },
 ```
 
-createAnimatedSpriteはテスクチャ要素が入った配列オブジェクトを渡すとAnimatedSpriteに変換してくれるしろもの。AnimatedSprite生成時の共通処理をまとめる。
+createAnimatedSprite はテスクチャ要素が入った配列オブジェクトを渡すと AnimatedSprite に変換してくれるしろもの。AnimatedSprite 生成時の共通処理をまとめる。
 
-``` javascript
+```javascript
     /** 方向ごとのAnimatedSpriteを作成しHashで返す */
     createDirectionSprites: function(textureHash) {
       let spriteHash = {};
@@ -946,15 +947,15 @@ createAnimatedSpriteはテスクチャ要素が入った配列オブジェクト
     },
 ```
 
-createDirectionSpritesはSpritesheetのテクスチャハッシュオブジェクトを渡すと、8方向のAnimatedSpriteを方向をキーとしたハッシュオブジェクトに変換してくれる。コードが長いので関数化したが、そろそろファイル分割もしたいところ。
+createDirectionSprites は Spritesheet のテクスチャハッシュオブジェクトを渡すと、8 方向の AnimatedSprite を方向をキーとしたハッシュオブジェクトに変換してくれる。コードが長いので関数化したが、そろそろファイル分割もしたいところ。
 
-これで8方向のAnimatedSpriteを作成する準備が整った。
+これで 8 方向の AnimatedSprite を作成する準備が整った。
 
-### SpriteをまとめるContainer
+### 7.4. Sprite をまとめる Container
 
-8方向のAnimatedSpriteを使ったらこれらのSpriteをまとめるために、Containerを作成し関連づける。
+8 方向の AnimatedSprite を使ったらこれらの Sprite をまとめるために、Container を作成し関連づける。
 
-``` javascript
+```javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // girl関連SpriteをまとめるContainerを作る
@@ -984,24 +985,24 @@ createDirectionSpritesはSpritesheetのテクスチャハッシュオブジェ�
     },
 ```
 
-walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
+walk_girl の移動は下記の通り girlContainer の移動に書き換える。
 
-``` javascript
-      // delta(前回実行時からの時間)と算出した速度をかけあわせて
-      // this.girlContainerを移動させる。
-      this.girlContainer.x += vx * delta;
-      this.girlContainer.y += vy * delta;
+```javascript
+// delta(前回実行時からの時間)と算出した速度をかけあわせて
+// this.girlContainerを移動させる。
+this.girlContainer.x += vx * delta;
+this.girlContainer.y += vy * delta;
 ```
 
-ここまで実装すると、8方向のセーラー少女が画面に表示され、まとめてWASD移動できるようになっているはず。
+ここまで実装すると、8 方向のセーラー少女が画面に表示され、まとめて WASD 移動できるようになっているはず。
 
 ![CharacterMovement02.gif](images/CharacterMovement02.gif)
 
-### セーラー少女を歩かせる
+### 7.5. セーラー少女を歩かせる
 
-現在セーラー少女が向いている方向に合わせて、向いている方向のAnimatedSpriteだけを表示するようにする。
+現在セーラー少女が向いている方向に合わせて、向いている方向の AnimatedSprite だけを表示するようにする。
 
-``` javascript
+```javascript
     /** Spritesheet生成完了後の非同期処理 */
     onSpritesheetLoaded: function(textures) {
       // girl関連SpriteをまとめるContainerを作る
@@ -1032,7 +1033,7 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
     },
 ```
 
-``` javascript
+```javascript
       // delta(前回実行時からの時間)と算出した速度をかけあわせて
       // this.girlContainerを移動させる。
       this.girlContainer.x += vx * delta;
@@ -1046,9 +1047,9 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
     },
 ```
 
-方向を設定するためのメソッドはsetDirectionとして新規作成した。
+方向を設定するためのメソッドは setDirection として新規作成した。
 
-``` javascript
+```javascript
     /** 指定のAnimatedSpriteを表示する */
     setDirection: function(spriteHash, direction) {
       if (!spriteHash[direction]) {
@@ -1069,17 +1070,17 @@ walk_girlの移動は下記の通りgirlContainerの移動に書き換える。
 
 ![CharacterMovement03.gif](images/CharacterMovement03.gif)
 
-## セーラー少女リファクタリング
+## 8. セーラー少女リファクタリング
 
 セーラー少女をオブジェクト志向にリファクタリングしてみる。
 
-CharacterMovement.vueと同じように動作する[src/components/CharacterMovement2.vue](../src/components/CharacterMovement2.vue)を作成する。
+CharacterMovement.vue と同じように動作する[src/components/CharacterMovement2.vue](../src/components/CharacterMovement2.vue)を作成する。
 
-そして、セーラー少女の核となるSailorGirlContainerを[src/lib/SailorGirlContainer.js](../src/lib/SailorGirlContainer.js)に作成する。
+そして、セーラー少女の核となる SailorGirlContainer を[src/lib/SailorGirlContainer.js](../src/lib/SailorGirlContainer.js)に作成する。
 
-SailorGirlContainerを用いることでCharacterMovement2.vue側のセーラー少女に関する箇所は下記のコードのみとなり、コード行数としても1/3程度まで減らすことができる。
+SailorGirlContainer を用いることで CharacterMovement2.vue 側のセーラー少女に関する箇所は下記のコードのみとなり、コード行数としても 1/3 程度まで減らすことができる。
 
-``` vue:CharacterMovement2.vue
+```vue:CharacterMovement2.vue
 <script>
 import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
 
@@ -1103,17 +1104,18 @@ import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
 
 ~~~~
 
-    this.sailorGirl = new SailorGirlContainer(this.onSailorGirlLoaded);
+    this.sailorGirl = await new SailorGirlContainer();
+    this.onSailorGirlLoaded();
   }
 };
 </script>
 ```
 
-### SailorGirlContainerのコンストラクタ
+### 8.1. SailorGirlContainer のコンストラクタ
 
-SailorGirlContainerのコンストラクタ部を説明する。
+SailorGirlContainer のコンストラクタ部を説明する。
 
-``` javascript
+```javascript
   /**
    * @param {Function} onLoadedCallback
    * リソース読み込みが完了した後に呼ばれるコールバック関数
@@ -1127,49 +1129,49 @@ SailorGirlContainerのコンストラクタ部を説明する。
     this._direction = "down";
 
     // pngファイルを読み込む
-    PIXI.loader.add(GirlSpritesPng).load(() => {
-      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
+    return new Promise(resolve => {
+      loader.add(GirlSpritesPng).load(() => {
+        const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
 
-      const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
-      spritesheet.parse(textureHash => {
-        // 8方向セーラー少女を生成
-        this._girls = this._createDirectionSprites(textureHash);
-        for (let key of Object.keys(this._girls)) {
-          this._girls[key].visible = false;
-          this.addChild(this._girls[key]);
-        }
-        // 初期値としてdown方向を設定する
-        this.direction = "down";
+        const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
+        spritesheet.parse( (textureHash) => {
+          // 8方向セーラー少女を生成
+          this._girls = this._createDirectionSprites(textureHash);
+          for (let key of Object.keys(this._girls)) {
+            this._girls[key].visible = false;
+            this.addChild(this._girls[key]);
+          }
+          // 初期値としてdown方向を設定する
+          this.direction = "down";
 
-        if (onLoadedCallback) {
-          onLoadedCallback();
-        }
+          resolve(this);
+        });
       });
-    });
+    })
   }
 ```
 
-コンストラクタでは継承元のPIXI.Containerのコンストラクタ呼び出しを行い、初期値設定、リソース読み込みまで実行している。
+コンストラクタでは継承元の PIXI.Container のコンストラクタ呼び出しを行い、初期値設定、リソース読み込みまで実行している。
 
-JavaScriptにはPrivateなどのアクセス修飾子はないので、実際には外からでもアクセスできるが、伝統的に`this._direction`のようにアンダーバーから始まる変数や関数はprivateとして扱ってねという暗黙知がある。
+JavaScript には Private などのアクセス修飾子はないので、実際には外からでもアクセスできるが、伝統的に`this._direction`のようにアンダーバーから始まる変数や関数は private として扱ってねという暗黙知がある。
 
-セーラー少女のリソース読み込み処理は、CharacterMovement.vueで
+セーラー少女のリソース読み込み処理は、CharacterMovement.vue で
 
-1. pngファイル読み込み
+1. png ファイル読み込み
 1. onAssetsLoaded
 1. onSpritesheetLoaded
 
-とコールバック関数チェーンとなっていたが、CharacterMovement2.vueではすべてSailorGirlContainerコンストラクタ内にまとめて記載している。
+とコールバック関数チェーンとなっていたが、CharacterMovement2.vue ではすべて SailorGirlContainer コンストラクタ内にまとめて記載している。
 
-また、onAssetsLoadedはアロー関数式`() => {}`の形で置き換えており、onSpritesheetLoadedはアロー関数式およびコンストラクタで渡したonLoadedCallbackを実行するところまでと同等である。
+また、onAssetsLoaded はアロー関数式`() => {}`の形で置き換えており、onSpritesheetLoaded はアロー関数式およびコンストラクタで渡した onLoadedCallback を実行するところまでと同等である。
 
-動作の流れがコールバックチェーンであることに変わりはないので、newでコンストラクタが返った後にリソース読み込みが着々と実行されることには注意する。
+動作の流れがコールバックチェーンであることに変わりはないので、new でコンストラクタが返った後にリソース読み込みが着々と実行されることには注意する。
 
-### SailorGirlContainerのgetter/setter
+### 8.2. SailorGirlContainer の getter/setter
 
-JavaScriptではgetter/setterが簡単に定義できるので、メンバ変数directionはこれを利用している。
+JavaScript では getter/setter が簡単に定義できるので、メンバ変数 direction はこれを利用している。
 
-``` javascript
+```javascript
   get direction() {
     return this._direction;
   }
@@ -1192,11 +1194,11 @@ JavaScriptではgetter/setterが簡単に定義できるので、メンバ変数
   }
 ```
 
-getでは_directionを直接返しており、setではdirectionに関わる設定変更をまとめて実施するようにしている。
+get では _direction を直接返しており、set では direction に関わる設定変更をまとめて実施するようにしている。
 
-ただ、実際にdirectionのsetterが呼ばれているのはコンストラクタとsetDirectionFrom2Dの中だけで、vueファイルからはsetDirectionFrom2Dから間接的にdirectionを設定していることになる。
+ただ、実際に direction の setter が呼ばれているのはコンストラクタと setDirectionFrom2D の中だけで、vue ファイルからは setDirectionFrom2D から間接的に direction を設定していることになる。
 
-``` javascript
+```javascript
  setDirectionFrom2D(x, y) {
     const direction = this.calculateDirectionFrom2D(x, y);
     if (!direction) {
@@ -1206,30 +1208,30 @@ getでは_directionを直接返しており、setではdirectionに関わる設
   }
 ```
 
-このように`this.direction = direction;`がsetterを通ることになる。
+このように`this.direction = direction;`が setter を通ることになる。
 
-## 移動速度と移動制限
+## 9. 移動速度と移動制限
 
 斜め移動時に速度が上がってしまう問題と、画面外への移動制限をコーディングする。
 
-CharacterMovement2.vueをコピーしCharacterMovement3.vueファイルを作成し、4つの関数を編集追加する。
+CharacterMovement2.vue をコピーし CharacterMovement3.vue ファイルを作成し、4 つの関数を編集追加する。
 
-gameloopは今後処理が増えるので、セーラー少女の移動を関数化する。
+gameloop は今後処理が増えるので、セーラー少女の移動を関数化する。
 
-``` javascript
+```javascript
     /** ゲームループ本体 */
     gameloop: function(delta) {
       this.moveSailorGirl(delta);
     },
 ```
 
-斜め移動時処理は2次元ベクトルノルムを利用してベクトル正規化することで実装する。
+斜め移動時処理は 2 次元ベクトルノルムを利用してベクトル正規化することで実装する。
 
-まず、移動速度ベクトルをX軸：vvx,Y軸vvyとし、そのノルムを計算した後、vvx,vvyをそれぞれをノルムで割ることで正規化している。
+まず、移動速度ベクトルを X 軸：vvx,Y 軸 vvy とし、そのノルムを計算した後、vvx,vvy をそれぞれをノルムで割ることで正規化している。
 
-画面外移動制限はcorrectMovingで実装する。
+画面外移動制限は correctMoving で実装する。
 
-``` javascript
+```javascript
     /** セーラー少女の移動処理 */
     moveSailorGirl: function(delta) {
       // 加速度定義
@@ -1275,9 +1277,9 @@ gameloopは今後処理が増えるので、セーラー少女の移動を関数
     },
 ```
 
-correctMoving移動したい座標を受け取り、画面範囲に入る座標を作成して返す。
+correctMoving 移動したい座標を受け取り、画面範囲に入る座標を作成して返す。
 
-``` javascript
+```javascript
     /** 障害物等を考慮し座標を補正をする */
     correctMoving: function(x, y) {
       // 画面外に出ないようにする
@@ -1288,11 +1290,37 @@ correctMoving移動したい座標を受け取り、画面範囲に入る座標�
     },
 ```
 
-fitInRangeはcorrectMovingの補助関数として作成する。
+fitInRange は correctMoving の補助関数として作成する。
 
-``` javascript
+```javascript
     /** 第1引数を第2引数と第3引数の範囲に収めた値を返す */
     fitInRange: function(num, minNum, maxNum) {
       return Math.max(minNum, Math.min(maxNum, num));
     }
 ```
+
+## 10. Vue Router
+
+## 11. 攻撃エフェクトアニメーション
+
+### 11.1. 攻撃エフェクト素材準備
+
+エフェクト素材は「ゲーム 素材 エフェクト」で検索して探せる。
+今回はサンプルとして[ぴぽや倉庫 エフェクト 戦闘　基本セット](https://pipoya.net/sozai/assets/effects/effect-battle-basic-set/)を使わせていただく。
+
+ダウンロードしたファイルを解凍して 320x240/pipo-btleffect006.png を src/assets/pipo-btleffect006.png にコピーする。
+
+次に[Pixi.js のスプライト json ファイル生成ツール](http://www.tansio.net/mobile/twitter/00002/)をブラウザで表示して、下記の通り入力してから生成ボタンを押す。
+
+```form
+ファイル名：pipo-btleffect006.png
+テクスチャ名：pipo-btleffect006_@@
+取り出しＸサイズ：120
+取り出しＹサイズ：120
+取り出し総数：7
+画像Ｘサイズ：840
+画像Ｙサイズ：120
+パディング：0
+```
+
+生成された json は src/assets/pipo-btleffect006.json に保存する。

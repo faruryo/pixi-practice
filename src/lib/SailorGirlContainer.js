@@ -1,12 +1,19 @@
 import * as PIXI from "pixi.js";
+import BaseSprite from "@/lib/BaseSprite.js";
 import GirlSpritesJson from "@/assets/sailor_girl_sprites_tansio.json";
 import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 
 /**
  * セーラー少女をまとめたクラス
- * @extends PIXI.Container
+ * @extends BaseSprite
  */
-export default class SailorGirlContainer extends PIXI.Container {
+export default class SailorGirlContainer extends BaseSprite {
+  /**
+   * @returns スプライトで利用するイメージのURL配列
+   */
+  static getImageURLs() {
+    return [GirlSpritesPng];
+  }
 
   /**
    * コンストラクタ
@@ -23,24 +30,32 @@ export default class SailorGirlContainer extends PIXI.Container {
 
     // pngファイルを読み込む
     return new Promise(resolve => {
-    loader.add(GirlSpritesPng).load(() => {
-      const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
-
-      const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
-      spritesheet.parse( (textureHash) => {
-        // 8方向セーラー少女を生成
-        this._girls = this._createDirectionSprites(textureHash);
-        for (let key of Object.keys(this._girls)) {
-          this._girls[key].visible = false;
-          this.addChild(this._girls[key]);
-        }
-        // 初期値としてdown方向を設定する
-        this.direction = "down";
-
-          resolve(this);
-      });
+      if (loader.resources.hasOwnProperty(GirlSpritesPng)) {
+        this._create_spritesheet(resolve);
+      } else {
+        loader.add(GirlSpritesPng).load(() => {
+          this._create_spritesheet(resolve);
+        });
+      }
     });
-    })
+  }
+
+  _create_spritesheet(resolve) {
+    const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
+
+    const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
+    spritesheet.parse(textureHash => {
+      // 8方向セーラー少女を生成
+      this._girls = this._createDirectionSprites(textureHash);
+      for (let key of Object.keys(this._girls)) {
+        this._girls[key].visible = false;
+        this.addChild(this._girls[key]);
+      }
+      // 初期値としてdown方向を設定する
+      this.direction = "down";
+
+      resolve(this);
+    });
   }
 
   get direction() {
@@ -65,8 +80,33 @@ export default class SailorGirlContainer extends PIXI.Container {
   }
 
   /**
+   * セイラー少女が向いている方向をRadianで返す
+   * @returns X軸方向を0としたRadian角度
+   */
+  getDirectionByRadian() {
+    switch (this._direction) {
+      case "left":
+        return Math.PI * 1;
+      case "upleft":
+        return Math.PI * (-3 / 4);
+      case "up":
+        return Math.PI * (-1 / 2);
+      case "upright":
+        return Math.PI * (-1 / 4);
+      case "right":
+        return Math.PI * 0;
+      case "downright":
+        return Math.PI * (+1 / 4);
+      case "down":
+        return Math.PI * (+1 / 2);
+      case "downleft":
+        return Math.PI * (+3 / 4);
+    }
+  }
+
+  /**
    * 方向ごとのAnimatedSpriteを作成しHashで返す
-   * @param {Object.<string, PIXI.Texture>} textureHash 
+   * @param {Object.<string, PIXI.Texture>} textureHash
    */
   _createDirectionSprites(textureHash) {
     /**

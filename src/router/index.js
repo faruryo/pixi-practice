@@ -7,6 +7,7 @@ import CharacterAnimation from "@/components/CharacterAnimation";
 import CharacterMovement from "@/components/CharacterMovement";
 import CharacterMovement2 from "@/components/CharacterMovement2";
 import CharacterMovement3 from "@/components/CharacterMovement3";
+import BattleEffect1 from "@/components/BattleEffect1";
 
 Vue.use(Router);
 
@@ -45,6 +46,10 @@ export default new Router({
     {
       path: "/CharacterMovement3",
       component: CharacterMovement3
+    },
+    {
+      path: "/BattleEffect1",
+      component: BattleEffect1
     }
   ]
 });

@@ -19,6 +19,9 @@
     <router-link tag="li" to="/CharacterMovement3">
       <a>CharacterMovement3</a>
     </router-link>
+    <router-link tag="li" to="/BattleEffect1">
+      <a>BattleEffect1</a>
+    </router-link>
   </div>
 </template>
 
