@@ -16,7 +16,10 @@ export default {
   mounted () {
     //------画像のアニメーション-----//
     // 表示するcanvasを用意
-    let app = new PIXI.Application(800, 600, {backgroundColor : 0xDAE8F4});
+    let app = new PIXI.Application({
+      backgroundColor : 0xDAE8F4
+    });
+    
     document.getElementById('stage').appendChild(app.view);
 
     // イメージを指定
@@ -46,7 +49,7 @@ export default {
         fontSize: 70,
         align: 'center',
         wordWrapWidth: 1000,
-        wordWrap: true
+        wordWrap: true,
     });
     let styleSmall =  new PIXI.TextStyle({
         fontFamily: 'Avenir, Helvetica, Arial, sans-serif',

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Sandbox />
     <h2>HelloPixi</h2>
     <HelloPixi msg="Welcome to Your Pixi.js App"/>
     <h2>MoveLogo</h2>
@@ -22,6 +23,7 @@ import CharacterAnimation from './components/CharacterAnimation.vue'
 import CharacterMovement from './components/CharacterMovement.vue'
 import CharacterMovement2 from './components/CharacterMovement2.vue'
 import CharacterMovement3 from './components/CharacterMovement3.vue'
+import Sandbox from './components/Sandbox.vue'
 
 export default {
   name: 'app',
@@ -31,7 +33,8 @@ export default {
     CharacterAnimation,
     CharacterMovement,
     CharacterMovement2,
-    CharacterMovement3
+    CharacterMovement3,
+    Sandbox,
   }
 }
 </script>
