@@ -9,10 +9,9 @@ import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 export default class SailorGirlContainer extends PIXI.Container {
 
   /**
-   * @param {Function} onLoadedCallback
-   * リソース読み込みが完了した後に呼ばれるコールバック関数
+   * コンストラクタ
    */
-  constructor(onLoadedCallback) {
+  constructor() {
     super();
 
     /**
@@ -23,6 +22,7 @@ export default class SailorGirlContainer extends PIXI.Container {
     const loader = PIXI.Loader.shared;
 
     // pngファイルを読み込む
+    return new Promise(resolve => {
     loader.add(GirlSpritesPng).load(() => {
       const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
 
@@ -37,11 +37,10 @@ export default class SailorGirlContainer extends PIXI.Container {
         // 初期値としてdown方向を設定する
         this.direction = "down";
 
-        if (onLoadedCallback) {
-          onLoadedCallback();
-        }
+          resolve(this);
       });
     });
+    })
   }
 
   get direction() {
