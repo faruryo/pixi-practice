@@ -71,8 +71,8 @@ export default {
 
         // 新しい座標を計算する
         let { newx, newy } = this.correctMoving(
-          this.sailorGirl.x+vx,
-          this.sailorGirl.y+vy
+          this.sailorGirl.x + vx,
+          this.sailorGirl.y + vy
         );
 
         // セーラー少女
@@ -86,17 +86,17 @@ export default {
     /** 障害物等を考慮し座標を補正をする */
     correctMoving: function(x, y) {
       // 画面外に出ないようにする
-      const newx = this.fitInRange(x, 0+1, this.app.view.width-1);
-      const newy = this.fitInRange(y, 0+1, this.app.view.height-1);
+      const newx = this.fitInRange(x, 0 + 1, this.app.view.width - 1);
+      const newy = this.fitInRange(y, 0 + 1, this.app.view.height - 1);
 
-      return {newx, newy};
+      return { newx, newy };
     },
     /** 第1引数を第2引数と第3引数の範囲に収めた値を返す */
     fitInRange: function(num, minNum, maxNum) {
       return Math.max(minNum, Math.min(maxNum, num));
     }
   },
-  mounted: function() {
+  mounted: async function() {
     this.app = new PIXI.Application({
       view: this.$el,
       backgroundColor: 0xdae8f4
@@ -105,7 +105,8 @@ export default {
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
     PIXI.Loader.shared.reset();
 
-    this.sailorGirl = new SailorGirlContainer(this.onSailorGirlLoaded);
+    this.sailorGirl = await new SailorGirlContainer();
+    this.onSailorGirlLoaded();
   }
 };
 </script>

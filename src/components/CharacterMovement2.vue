@@ -68,7 +68,7 @@ export default {
       this.sailorGirl.setDirectionFrom2D(vx, vy);
     }
   },
-  mounted: function() {
+  mounted: async function() {
     this.app = new PIXI.Application({
       view: this.$el,
       backgroundColor: 0xdae8f4
@@ -77,7 +77,8 @@ export default {
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
     PIXI.Loader.shared.reset();
 
-    this.sailorGirl = new SailorGirlContainer(this.onSailorGirlLoaded);
+    this.sailorGirl = await new SailorGirlContainer();
+    this.onSailorGirlLoaded();
   }
 };
 </script>
