@@ -1,0 +1,22 @@
+name: Publish Docker
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Publish Docker
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: faruryo/pixi-practice
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag: ${{ github.sha }}
+
