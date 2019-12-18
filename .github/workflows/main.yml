@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: faruryo/pixi-practice
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        tag: ${{ github.sha }}
+        snapshot: true
 
