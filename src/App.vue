@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <CalendarSample />
     <Sandbox />
     <h2>HelloPixi</h2>
     <HelloPixi msg="Welcome to Your Pixi.js App"/>
@@ -24,6 +25,7 @@ import CharacterMovement from './components/CharacterMovement.vue'
 import CharacterMovement2 from './components/CharacterMovement2.vue'
 import CharacterMovement3 from './components/CharacterMovement3.vue'
 import Sandbox from './components/Sandbox.vue'
+import CalendarSample from './components/calendarSample.vue'
 
 export default {
   name: 'app',
@@ -35,6 +37,7 @@ export default {
     CharacterMovement2,
     CharacterMovement3,
     Sandbox,
+    CalendarSample,
   }
 }
 </script>
