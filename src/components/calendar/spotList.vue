@@ -46,7 +46,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 200px;
-  height: 600px;
+  /* height: 600px; */
   /* margin: 20px; */
   background-color: lightblue;
 }

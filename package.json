@@ -13,6 +13,7 @@
     "@fullcalendar/timegrid": "^4.3.0",
     "@fullcalendar/vue": "^4.3.1",
     "core-js": "^2.6.5",
+    "moment": "^2.24.0",
     "pixi.js": "^5.2.0",
     "vue": "^2.6.10",
     "vuex": "^3.1.2"

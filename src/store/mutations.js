@@ -3,6 +3,8 @@ export const state = {
     draggedItem: null,
 
     schedule: [],
+    isEventCtl: false,
+    ctlingEvent: null,
 };
 
 export const mutations = {
@@ -13,6 +15,15 @@ export const mutations = {
     schedule(state, payload) {
         state.schedule = payload.item;
     },
+
+    isEventCtl(state, payload) {
+        state.isEventCtl = payload.item;
+    },
+
+    ctlingEvent(state, payload) {
+        state.ctlingEvent = payload.item;
+    },
+
   };
 
 export const actions = {
@@ -22,5 +33,13 @@ export const actions = {
 
     setScheduleItem({commit}, item){
         commit('schedule',{item})
+    },
+
+    setIsEventCtl({commit}, item){
+        commit('isEventCtl',{item})
+    },
+
+    setCtlingEvent({commit}, item){
+        commit('ctlingEvent',{item})
     },
 };

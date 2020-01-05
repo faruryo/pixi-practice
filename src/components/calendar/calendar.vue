@@ -4,7 +4,8 @@
     <FullCalendar id="full-calendar" ref="fullCalendar"
     defaultView="timeGridDay" :plugins="calendarPlugins"
     :height="fcHeight" :allDaySlot="true" :editable="true" 
-    :events="events" />
+    :events="events" @eventPositioned="eventRender"
+    />
   </div>
 </template>
 
@@ -27,12 +28,8 @@ export default {
       calendarPlugins: [ timeGridPlugin, interactionPlugin ],
       fcHeight: "parent",
       events: [
-        { title: 'spotA', start: '2019-12-22T10:45:00', end: '2019-12-22T12:45:00', overlap: true},
-        { title: 'move', start: '2019-12-22T12:45:00', end: '2019-12-22T13:15:00', overlap: true, rendering: 'background'},
-        { title: 'spotB', start: '2019-12-22 13:15:00', end: '2019-12-22 14:00:00', overlap: true},
-        { title: 'move', start: '2019-12-22T14:00:00', end: '2019-12-22T15:00:00', overlap: true, rendering: 'background'},
-        { title: 'spotC', start: '2019-12-22T15:00:00', end: '2019-12-22T16:00:00', overlap: true},
-      ]
+        { title: 'spotA', start: '2020-01-06T10:45:00', end: '2020-01-06T12:45:00'},
+      ],
     }
   },
   props: {
@@ -40,14 +37,14 @@ export default {
   computed: {
   },
   mounted() {
-    // var containerEl = document.getElementById('external-events');
     var containerEl = document.getElementsByClassName('spot-list');
 
     new Draggable(containerEl[0], {
       itemSelector:  '.fc-event',
       eventData: function(eventEl) {
         return {
-          title: eventEl.innerText
+          title: eventEl.innerText,
+          duration: '01:00'
         };
       }
     })
@@ -55,14 +52,24 @@ export default {
   methods: {
     ...mapActions({
       setScheduleItem: 'setScheduleItem',
+      setIsEventCtl: 'setIsEventCtl',
+      setCtlingEvent: 'setCtlingEvent',
     }),
 
     pushButton() {
-      // let calendarApi = this.$refs.fullCalendar.getApi();
-      // let calendarApi = document.getElementById('full-calendar').$refs.fullCalendar;
       let calendarApi = this.$refs.fullCalendar.getApi();
       this.$store.dispatch("setScheduleItem", calendarApi.getEvents());
-    }
+    },
+
+    eventRender(info) {
+      let targets = info.el.getElementsByClassName("fc-time");
+      for(let i = 0; i < targets.length; i++){
+        targets[i].addEventListener("click",() => {
+          this.$store.dispatch("setIsEventCtl", true);
+          this.$store.dispatch("setCtlingEvent", info.event);
+        }, false);
+      }
+    },
   }
 }
 </script>
