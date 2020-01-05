@@ -5,6 +5,7 @@
     defaultView="timeGridDay" :plugins="calendarPlugins"
     :height="fcHeight" :allDaySlot="true" :editable="true" 
     :events="events" @eventPositioned="eventRender"
+    :snapDuration="1"
     />
   </div>
 </template>
@@ -75,12 +76,16 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 
 #full-calendar {
   flex-direction: column;
   width: 400px;
   background-color: lightblue;
+}
+
+.fc-time-grid .fc-slats td {
+  height: 50px !important;
 }
 
 .push-button {
