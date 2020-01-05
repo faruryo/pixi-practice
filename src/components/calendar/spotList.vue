@@ -7,23 +7,19 @@
     </p>
     <div class='fc-event'>
       <span>spotD</span>
-      <img src="../../img/furit_mark15_momo.png" width="30" height="30"/>
+      <img src="../../../img/furit_mark15_momo.png" width="30" height="30"/>
     </div>
     <div class='fc-event'>
       <span>spotE</span>
-      <img src="../../img/furit_mark15_momo.png" width="30" height="30"/>
+      <img src="../../../img/furit_mark15_momo.png" width="30" height="30"/>
     </div>
     <div class='fc-event'>
       <span>spotF</span>
-      <img src="../../img/furit_mark15_momo.png" width="30" height="30"/>
+      <img src="../../../img/furit_mark15_momo.png" width="30" height="30"/>
     </div>
     <div class='fc-event'>spotG</div>
     <div class='fc-event'>spotH</div>
     <div class='fc-event'>spotI</div>
-    <p>
-      <input type='checkbox' id='drop-remove' />
-      <label for='drop-remove'>remove after drop</label>
-    </p>
   </div>
 </template>
 
@@ -49,7 +45,7 @@ export default {
 .spot-list {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 200px;
   height: 600px;
   /* margin: 20px; */
   background-color: lightblue;

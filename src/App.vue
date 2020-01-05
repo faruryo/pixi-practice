@@ -25,7 +25,7 @@ import CharacterMovement from './components/CharacterMovement.vue'
 import CharacterMovement2 from './components/CharacterMovement2.vue'
 import CharacterMovement3 from './components/CharacterMovement3.vue'
 import Sandbox from './components/Sandbox.vue'
-import CalendarSample from './components/calendarSample.vue'
+import CalendarSample from './components/calendar/calendarSample.vue'
 
 export default {
   name: 'app',

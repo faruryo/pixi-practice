@@ -1,6 +1,6 @@
 <template>
   <div id="full-calendar"> 
-    <button @click="pushButton">push!</button>
+    <button class="push-button" @click="pushButton">show events</button>
     <FullCalendar id="full-calendar" ref="fullCalendar"
     defaultView="timeGridDay" :plugins="calendarPlugins"
     :height="fcHeight" :allDaySlot="true" :editable="true" 
@@ -71,12 +71,15 @@ export default {
 <style scoped>
 
 #full-calendar {
-  display: flex;
   flex-direction: column;
-  width: 50%;
-  /* height: 400px; */
-  /* margin: 20px; */
+  width: 400px;
   background-color: lightblue;
+}
+
+.push-button {
+  width: 100px;
+  height: 30px;
+  margin: 10px;
 }
 
 </style>
