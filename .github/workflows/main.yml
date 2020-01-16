@@ -18,12 +18,17 @@ jobs:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
           known-hosts: bitbucket.org
-      - name: debug
+      - name: debug1
         run: |
           ls -lt /home/runner/.ssh
+          ls -lt /home/runner
+      - name: debug2
+        run: |
           cat /home/runner/.ssh/id_rsa
           cat /home/runner/.ssh/id_rsa.pub
-          ssh -T git@bitbucket.org -v
+      - name: debug3
+        run: |
+          ssh -T git@bitbucket.org -vvv
       - name: マニフェストリポジトリをcloneする
         run: |
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
