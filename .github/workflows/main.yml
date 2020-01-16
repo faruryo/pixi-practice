@@ -20,7 +20,6 @@ jobs:
       - name: debug1
         run: |
           ls -lt /home/runner/.ssh
-          ls -lt /home/runner
       - name: debug2
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
