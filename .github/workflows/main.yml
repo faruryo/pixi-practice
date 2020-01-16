@@ -1,4 +1,4 @@
-name: Publish Docker
+name: build and deploy request
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           snapshot: true
 
-  deploy:
+  deploy-request:
     name: ビルドしたDockerイメージをデプロイするPRを作成する
     runs-on: ubuntu-latest
     needs: build
