@@ -24,8 +24,7 @@ jobs:
           ls -lt /home/runner
       - name: debug2
         run: |
-          cat /home/runner/.ssh/id_rsa
-          cat /home/runner/.ssh/id_rsa.pub
+          cat /home/runner/.ssh/known_hosts
       - name: debug3
         run: |
           ssh -T git@bitbucket.org -vvv
