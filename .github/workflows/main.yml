@@ -29,11 +29,11 @@ jobs:
     needs: build
 
     steps:
-    - name: Install SSH key
-      uses: shimataro/ssh-key-action@v1
-      with:
-        private-key: ${{ secrets.MANIFEST_SSH_KEY }}
-        public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v1
+        with:
+          private-key: ${{ secrets.MANIFEST_SSH_KEY }}
+          public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
       - name: マニフェストリポジトリをcloneする
         run: |
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
