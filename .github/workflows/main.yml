@@ -20,7 +20,6 @@ jobs:
           known-hosts: bitbucket.org
       - name: debug
         run: |
-          ls -al .ssh
           ssh -T git@bitbucket.org -v
       - name: マニフェストリポジトリをcloneする
         run: |
