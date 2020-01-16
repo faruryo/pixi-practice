@@ -2,23 +2,38 @@ name: Publish Docker
 
 on:
   push:
-    branches: 
+    branches:
       - master
+      - feature/*
 
 jobs:
   build:
-
+    name: Dockerイメージをビルドする
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
-      with:
-        ref: ${{ github.ref }}
-    - name: Publish Docker
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: faruryo/pixi-practice
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        snapshot: true
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: Publish Docker
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: faruryo/pixi-practice
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          snapshot: true
 
+  deploy:
+    name: ビルドしたDockerイメージをデプロイするPRを作成する
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v1
+      with:
+        private-key: ${{ secrets.MANIFEST_SSH_KEY }}
+        public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+      - name: マニフェストリポジトリをcloneする
+        run: |
+          git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
