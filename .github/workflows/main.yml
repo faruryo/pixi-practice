@@ -34,6 +34,7 @@ jobs:
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+          known-hosts: bitbucket.org
       - name: マニフェストリポジトリをcloneする
         run: |
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
