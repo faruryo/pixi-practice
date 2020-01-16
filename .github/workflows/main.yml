@@ -21,6 +21,8 @@ jobs:
       - name: debug
         run: |
           ls -lt /home/runner/.ssh
+          cat /home/runner/.ssh/id_rsa
+          cat /home/runner/.ssh/id_rsa.pub
           ssh -T git@bitbucket.org -v
       - name: マニフェストリポジトリをcloneする
         run: |
