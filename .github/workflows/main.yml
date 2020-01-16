@@ -17,7 +17,6 @@ jobs:
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
-          known-hosts: bitbucket.org
       - name: debug1
         run: |
           ls -lt /home/runner/.ssh
@@ -27,6 +26,7 @@ jobs:
           cat /home/runner/.ssh/known_hosts
       - name: debug3
         run: |
+          ssh-keyscan -H $host >> ~/.ssh/known_hosts
           ssh -T git@bitbucket.org -vvv
       - name: マニフェストリポジトリをcloneする
         run: |
