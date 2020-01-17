@@ -7,20 +7,41 @@ on:
       - feature/*
 
 jobs:
-  deploy-request:
-    name: ビルドしたDockerイメージをデプロイするPRを作成する
+  build-deploy-request:
+    name: Dockerイメージをビルドし、デプロイリクエストを作成する
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install SSH key
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: Dockerイメージをビルド&プッシュ
+        id: publish_docker
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: faruryo/pixi-practice
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          snapshot: true
+      - name: マニフェストリポジトリSSHキー設定
         uses: shimataro/ssh-key-action@v1
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
-      - name: Install known_hosts
+      - name: bitbucket.orgをknown_hostsに登録する
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
       - name: マニフェストリポジトリをcloneする
         run: |
-          ssh -T git@bitbucket.org -vvv
+          git config --global user.name "pixi-practice"
+          git config --global user.email "pixi-practice@mail.com"
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
+          
+          cd kubernetes-common/sailorgirl
+          update.sh ${{ github.ref }} ${{ steps.publish_docker.outputs.snapshot-tag }}
+          
+          git status
+          git add -A
+          
+          git commit -m "pixi-practice ${{ github.ref }}"
+          
