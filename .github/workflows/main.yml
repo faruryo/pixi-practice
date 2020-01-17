@@ -31,16 +31,14 @@ jobs:
       - name: bitbucket.orgをknown_hostsに登録する
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
-      - name: マニフェストリポジトリをcloneする
+      - name: デプロイリクエストを作成する
         run: |
           git config --global user.name "pixi-practice"
           git config --global user.email "pixi-practice@mail.com"
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
-          pwd
+
           cd kubernetes-common/sailorgirl
-          pwd
-          ls -lt
-          update.sh ${{ github.ref }} ${{ steps.publish_docker.outputs.snapshot-tag }}
+          ./update.sh ${{ github.ref }} ${{ steps.publish_docker.outputs.snapshot-tag }}
           
           git status
           git add -A
