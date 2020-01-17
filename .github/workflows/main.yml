@@ -17,6 +17,7 @@ jobs:
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+          name: rsa_manifest
       - name: debug1
         run: |
           ls -lt /home/runner/.ssh
