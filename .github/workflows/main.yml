@@ -17,6 +17,9 @@ jobs:
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
           public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+      - name: Install known_hosts
+        run: |
+          ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
       - name: マニフェストリポジトリをcloneする
         run: |
           ssh -T git@bitbucket.org -vvv
