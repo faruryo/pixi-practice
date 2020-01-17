@@ -38,7 +38,8 @@ jobs:
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
-          ./update.sh ${{ github.ref }} ${{ steps.publish_docker.outputs.snapshot-tag }}
+          BRANCH=$(echo $GITHUB_REF | sed 's/refs\/heads\///')
+          ./update.sh $BRANCH ${{ steps.publish_docker.outputs.snapshot-tag }}
           
           git status
           git add -A
