@@ -36,8 +36,10 @@ jobs:
           git config --global user.name "pixi-practice"
           git config --global user.email "pixi-practice@mail.com"
           git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
-          
+          pwd
           cd kubernetes-common/sailorgirl
+          pwd
+          ls -lt
           update.sh ${{ github.ref }} ${{ steps.publish_docker.outputs.snapshot-tag }}
           
           git status
