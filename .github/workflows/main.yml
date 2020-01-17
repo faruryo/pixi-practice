@@ -24,6 +24,8 @@ jobs:
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
           cat /home/runner/.ssh/known_hosts
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1
       - name: debug3
         run: |
           ssh -T git@bitbucket.org -vvv
