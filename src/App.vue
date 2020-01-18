@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>otamesi murata4</h1>
     <router-view />
     <router-link tag="li" to="/HelloPixi">
       <a>HelloPixi</a>
