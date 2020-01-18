@@ -39,16 +39,16 @@ jobs:
           git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
-          ./update.sh $SERVICE ${{ steps.publish_docker.outputs.snapshot-tag }} > /preview_host.txt
+          ./update.sh $SERVICE ${{ steps.publish_docker.outputs.snapshot-tag }} > ~/preview_host.txt
 
           git status
           git add -A
           git commit -m "update pixi-practice $SERVICE"
           git push origin master
 
-      - name: デプロイのためのマニフェストプッシュ
+      - name: プレビュー環境の通知
         run: |
-          PREVIEW_URL=http://$(cat /preview_host.txt)/
+          PREVIEW_URL=http://$(cat ~/preview_host.txt)/
           curl -X POST \
             --url ${{ github.event.pull_request._links.statuses.href }} \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
