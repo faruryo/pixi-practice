@@ -35,7 +35,7 @@ jobs:
         run: |
           git config --global user.name "pixi-practice"
           git config --global user.email "pixi-practice@mail.com"
-          git clone git@bitbucket.org:faru_ryo/kubernetes-common.git
+          git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
           BRANCH=$(echo $GITHUB_REF | sed 's/refs\/heads\///')
@@ -44,5 +44,12 @@ jobs:
           git status
           git add -A
           
-          git commit -m "pixi-practice ${{ github.ref }}"
+          git commit -m "update pixi-practice $BRANCH"
+          git push origin master:deploy/pixi-practice/$BRANCH
+          
+          curl https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests
+            -u $BITBUCKET_USERNAME:$BITBUCKET_PASSWORD
+            -X POST
+            -H 'Content-Type: application/json'
+            -d '{"title":"[DEPLOY REQUEST] pixi-practice/$BRANCH '$GITHUB_SHA'","description":"https://github.com/faruryo/pixi-practice/commit/'$GITHUB_SHA' に対するmanifest更新","source":{"branch":{"name":"'deploy/pixi-practice/$BRANCH'"}},"destination":{"branch":{"name":"master"}},"close_source_branch":true}'
           
