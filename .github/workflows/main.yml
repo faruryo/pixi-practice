@@ -27,7 +27,7 @@ jobs:
         uses: shimataro/ssh-key-action@v1
         with:
           private-key: ${{ secrets.MANIFEST_SSH_KEY }}
-          public-key: ${{ secrets.MANIFEST_SSH_KEY_PUBLIC }}
+          public-key: ""
       - name: bitbucket.orgをknown_hostsに登録する
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
