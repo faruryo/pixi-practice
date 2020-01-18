@@ -29,7 +29,7 @@ jobs:
           git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
-          ./update.sh $SERVICE
+          ./delete.sh $SERVICE
 
           git status
           git add -A
