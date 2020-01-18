@@ -1,12 +1,11 @@
 name: テスト環境へのビルド&デプロイ
 
 on:
-  push:
-    tags:
-      - test/*
-    paths-ignore:
-      - ".**"
-      - "docs/**"
+  pull_request:
+    types: [synchronize, opened, reopened]
+
+env:
+  SERVICE: preview-${{ github.event.number }}
 
 jobs:
   build-deploy-request:
@@ -40,11 +39,23 @@ jobs:
           git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
-          BRANCH=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
-          BRANCH_=$(echo $BRANCH | sed 's/\//-/' | sed 's/_/-/')
-          ./update.sh $BRANCH_ ${{ steps.publish_docker.outputs.snapshot-tag }}
+          ./update.sh $SERVICE ${{ steps.publish_docker.outputs.snapshot-tag }} > /preview_host.txt
 
           git status
           git add -A
-          git commit -m "update pixi-practice $BRANCH"
+          git commit -m "update pixi-practice $SERVICE"
           git push origin master
+
+      - name: デプロイのためのマニフェストプッシュ
+        run: |
+          PREVIEW_URL=http://$(cat /preview_host.txt)/
+          curl -X POST \
+            --url ${{ github.event.pull_request._links.statuses.href }} \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"state\": \"success\",
+              \"target_url\": \"${PREVIEW_URL}\",
+              \"description\": \"Deploy preview ready!\",
+              \"context\": \"deploy/preview\"
+            }"
