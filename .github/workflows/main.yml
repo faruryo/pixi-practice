@@ -5,6 +5,9 @@ on:
     branches:
       - master
       - feature/*
+    paths-ignore:
+      - ".**"
+      - "docs/**"
 
 jobs:
   build-deploy-request:
