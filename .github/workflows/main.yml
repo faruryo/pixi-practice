@@ -47,9 +47,9 @@ jobs:
           git commit -m "update pixi-practice $BRANCH"
           git push origin master:deploy/pixi-practice/$BRANCH
           
-          curl https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests
-            -u $BITBUCKET_USERNAME:$BITBUCKET_PASSWORD
-            -X POST
-            -H 'Content-Type: application/json'
+          curl https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests \
+            -u $BITBUCKET_USERNAME:$BITBUCKET_PASSWORD \
+            -X POST \
+            -H 'Content-Type: application/json' \
             -d '{"title":"[DEPLOY REQUEST] pixi-practice/$BRANCH '$GITHUB_SHA'","description":"https://github.com/faruryo/pixi-practice/commit/'$GITHUB_SHA' に対するmanifest更新","source":{"branch":{"name":"'deploy/pixi-practice/$BRANCH'"}},"destination":{"branch":{"name":"master"}},"close_source_branch":true}'
           
