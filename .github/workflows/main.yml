@@ -42,7 +42,7 @@ jobs:
 
           cd kubernetes-common/sailorgirl
           BRANCH=$(echo $GITHUB_REF | sed 's/refs\/heads\///')
-          BRANCH_=$(echo BRANCH | sed 's/\//_/')
+          BRANCH_=$(echo $BRANCH | sed 's/\//_/')
           ./update.sh $BRANCH_ ${{ steps.publish_docker.outputs.snapshot-tag }}
 
           git status
