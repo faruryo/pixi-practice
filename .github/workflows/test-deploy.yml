@@ -8,7 +8,7 @@ env:
   SERVICE: preview-${{ github.event.number }}
 
 jobs:
-  build-deploy-request:
+  build-deploy:
     name: Dockerイメージをビルドし、デプロイリクエストを作成する
     runs-on: ubuntu-latest
 
@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+
       - name: Dockerイメージをビルド&プッシュ
         id: publish_docker
         uses: elgohr/Publish-Docker-Github-Action@master
@@ -24,6 +25,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           snapshot: true
+
       - name: マニフェストリポジトリSSHキー設定
         uses: shimataro/ssh-key-action@v1
         with:
@@ -32,6 +34,7 @@ jobs:
       - name: bitbucket.orgをknown_hostsに登録する
         run: |
           ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
+
       - name: デプロイのためのマニフェストプッシュ
         run: |
           git config --global user.name "pixi-practice"
@@ -39,16 +42,16 @@ jobs:
           git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
 
           cd kubernetes-common/sailorgirl
-          ./update.sh $SERVICE ${{ steps.publish_docker.outputs.snapshot-tag }} > /preview_host.txt
+          ./update.sh $SERVICE ${{ steps.publish_docker.outputs.snapshot-tag }} > ~/preview_host.txt
 
           git status
           git add -A
           git commit -m "update pixi-practice $SERVICE"
           git push origin master
 
-      - name: デプロイのためのマニフェストプッシュ
+      - name: プレビュー環境の通知
         run: |
-          PREVIEW_URL=http://$(cat /preview_host.txt)/
+          PREVIEW_URL=http://$(cat ~/preview_host.txt)/
           curl -X POST \
             --url ${{ github.event.pull_request._links.statuses.href }} \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
