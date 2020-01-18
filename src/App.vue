@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>otamesi murata2</h1>
+    <h1>otamesi murata3</h1>
     <router-view />
     <router-link tag="li" to="/HelloPixi">
       <a>HelloPixi</a>
