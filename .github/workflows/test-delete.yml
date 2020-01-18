@@ -1,0 +1,36 @@
+name: テスト環境を削除する
+
+on:
+  release:
+    types:
+      - deleted
+
+jobs:
+  build-deploy-request:
+    name: デプロイを削除する
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: マニフェストリポジトリSSHキー設定
+        uses: shimataro/ssh-key-action@v1
+        with:
+          private-key: ${{ secrets.MANIFEST_SSH_KEY }}
+          public-key: ""
+      - name: bitbucket.orgをknown_hostsに登録する
+        run: |
+          ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts
+      - name: デプロイ削除のためのマニフェストプッシュ
+        run: |
+          git config --global user.name "pixi-practice"
+          git config --global user.email "pixi-practice@mail.com"
+          git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
+
+          cd kubernetes-common/sailorgirl
+          BRANCH=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          BRANCH_=$(echo $BRANCH | sed 's/\//-/' | sed 's/_/-/')
+          ./delete.sh $BRANCH_
+
+          git status
+          git add -A
+          git commit -m "delete pixi-practice $BRANCH"
+          git push origin master
