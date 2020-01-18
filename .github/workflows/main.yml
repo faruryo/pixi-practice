@@ -49,8 +49,8 @@ jobs:
           NEW_MANIFEST_BRANCH=deploy/pixi-practice/$BRANCH-${{ steps.publish_docker.outputs.snapshot-tag }}
           git push origin master:$NEW_MANIFEST_BRANCH
           
-          curl --trace-ascii - https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests \
-            -u $BITBUCKET_USERNAME:$BITBUCKET_PASSWORD \
+          curl https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests \
+            -u ${{ secrets.BITBUCKET_USERNAME }}:${{ secrets.BITBUCKET_PASSWORD }} \
             -X POST \
             -H 'Content-Type: application/json' \
             -d '{"title":"[DEPLOY REQUEST] '$NEW_MANIFEST_BRANCH' '$GITHUB_SHA'","description":"https://github.com/faruryo/pixi-practice/commit/'$GITHUB_SHA' に対するmanifest更新","source":{"branch":{"name":"'$NEW_MANIFEST_BRANCH'"}},"destination":{"branch":{"name":"master"}},"close_source_branch":true}'
