@@ -29,8 +29,10 @@ export default class SailorGirlContainer extends BaseSprite {
     const loader = PIXI.Loader.shared;
 
     // pngファイルを読み込む
-    return new Promise(resolve => {
-      if (loader.resources.hasOwnProperty(GirlSpritesPng)) {
+    return new Promise((resolve) => {
+      if (
+        Object.prototype.hasOwnProperty.call(loader.resources, GirlSpritesPng)
+      ) {
         this._create_spritesheet(resolve);
       } else {
         loader.add(GirlSpritesPng).load(() => {
@@ -44,7 +46,7 @@ export default class SailorGirlContainer extends BaseSprite {
     const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
 
     const spritesheet = new PIXI.Spritesheet(baseTexture, GirlSpritesJson);
-    spritesheet.parse(textureHash => {
+    spritesheet.parse((textureHash) => {
       // 8方向セーラー少女を生成
       this._girls = this._createDirectionSprites(textureHash);
       for (let key of Object.keys(this._girls)) {
@@ -118,56 +120,56 @@ export default class SailorGirlContainer extends BaseSprite {
       textureHash["sailor_girl_01"],
       textureHash["sailor_girl_00"],
       textureHash["sailor_girl_01"],
-      textureHash["sailor_girl_02"]
+      textureHash["sailor_girl_02"],
     ]);
 
     spriteHash["downleft"] = this._createAnimatedSprite([
       textureHash["sailor_girl_04"],
       textureHash["sailor_girl_03"],
       textureHash["sailor_girl_04"],
-      textureHash["sailor_girl_05"]
+      textureHash["sailor_girl_05"],
     ]);
 
     spriteHash["left"] = this._createAnimatedSprite([
       textureHash["sailor_girl_07"],
       textureHash["sailor_girl_06"],
       textureHash["sailor_girl_07"],
-      textureHash["sailor_girl_08"]
+      textureHash["sailor_girl_08"],
     ]);
 
     spriteHash["downright"] = this._createAnimatedSprite([
       textureHash["sailor_girl_10"],
       textureHash["sailor_girl_09"],
       textureHash["sailor_girl_10"],
-      textureHash["sailor_girl_11"]
+      textureHash["sailor_girl_11"],
     ]);
 
     spriteHash["right"] = this._createAnimatedSprite([
       textureHash["sailor_girl_13"],
       textureHash["sailor_girl_12"],
       textureHash["sailor_girl_13"],
-      textureHash["sailor_girl_14"]
+      textureHash["sailor_girl_14"],
     ]);
 
     spriteHash["upleft"] = this._createAnimatedSprite([
       textureHash["sailor_girl_16"],
       textureHash["sailor_girl_15"],
       textureHash["sailor_girl_16"],
-      textureHash["sailor_girl_17"]
+      textureHash["sailor_girl_17"],
     ]);
 
     spriteHash["up"] = this._createAnimatedSprite([
       textureHash["sailor_girl_19"],
       textureHash["sailor_girl_18"],
       textureHash["sailor_girl_19"],
-      textureHash["sailor_girl_20"]
+      textureHash["sailor_girl_20"],
     ]);
 
     spriteHash["upright"] = this._createAnimatedSprite([
       textureHash["sailor_girl_22"],
       textureHash["sailor_girl_21"],
       textureHash["sailor_girl_22"],
-      textureHash["sailor_girl_23"]
+      textureHash["sailor_girl_23"],
     ]);
 
     return spriteHash;
