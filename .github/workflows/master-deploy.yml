@@ -37,9 +37,9 @@ jobs:
         run: |
           git config --global user.name "pixi-practice"
           git config --global user.email "pixi-practice@mail.com"
-          git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
+          git clone -b master git@github.com:faruryo/room-402-manifest.git
 
-          cd kubernetes-common/sailorgirl
+          cd room-402-manifest/sailorgirl
           BRANCH=$(echo $GITHUB_REF | sed 's/refs\/heads\///')
           BRANCH_=$(echo $BRANCH | sed 's/\//-/' | sed 's/_/-/')
           ./update.sh $BRANCH_ ${{ steps.publish_docker.outputs.snapshot-tag }}
@@ -51,9 +51,3 @@ jobs:
 
           NEW_MANIFEST_BRANCH=deploy/pixi-practice/$BRANCH-${{ steps.publish_docker.outputs.snapshot-tag }}
           git push origin master:$NEW_MANIFEST_BRANCH
-
-          curl https://api.bitbucket.org/2.0/repositories/faru_ryo/kubernetes-common/pullrequests \
-            -u ${{ secrets.BITBUCKET_USERNAME }}:${{ secrets.BITBUCKET_PASSWORD }} \
-            -X POST \
-            -H 'Content-Type: application/json' \
-            -d '{"title":"[DEPLOY REQUEST] '$NEW_MANIFEST_BRANCH' '$GITHUB_SHA'","description":"https://github.com/faruryo/pixi-practice/commit/'$GITHUB_SHA' に対するmanifest更新","source":{"branch":{"name":"'$NEW_MANIFEST_BRANCH'"}},"destination":{"branch":{"name":"master"}},"close_source_branch":true}'

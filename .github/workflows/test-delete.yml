@@ -26,9 +26,9 @@ jobs:
         run: |
           git config --global user.name "pixi-practice"
           git config --global user.email "pixi-practice@mail.com"
-          git clone -b master git@bitbucket.org:faru_ryo/kubernetes-common.git
+          git clone -b master git@github.com:faruryo/room-402-manifest.git
 
-          cd kubernetes-common/sailorgirl
+          cd room-402-manifest/sailorgirl
           ./delete.sh $SERVICE
 
           git status
