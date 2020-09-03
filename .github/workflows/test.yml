@@ -1,0 +1,29 @@
+name: test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+      BUILD_IMAGE: faruryo/pixi-practice:build-cache
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: hadolint
+        uses: burdzwastaken/hadolint-action@master
+
+      - name: Docker build
+        run: |
+          docker build -t $BUILD_IMAGE \
+          --target build-stage \
+          --cache-from=$BUILD_IMAGE .
+
+      - name: Docker build
+        run: docker run $BUILD_IMAGE npm run lint
