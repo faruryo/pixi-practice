@@ -1,0 +1,27 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - ".**"
+      - "docs/**"
+
+jobs:
+  build:
+    name: Dockerイメージをビルドし、デプロイリクエストを作成する
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: Dockerイメージをビルド&プッシュ
+        id: publish_docker
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: faruryo/pixi-practice
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          snapshot: true
