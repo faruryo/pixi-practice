@@ -10,14 +10,14 @@ on:
 
 jobs:
   build:
-    name: Dockerイメージをビルドし、デプロイリクエストを作成する
+    name: Dockerイメージをbuildし、レジストリにpushする
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
-      - name: Dockerイメージをビルド&プッシュ
+      - name: Dockerイメージをbuild & push
         id: publish_docker
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
