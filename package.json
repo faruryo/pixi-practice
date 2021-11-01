@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "3.19.0",
     "lodash": "4.17.21",
-    "pixi.js": "5.3.10",
+    "pixi.js": "5.3.11",
     "vue": "2.6.14",
     "vue-router": "3.5.3"
   },
