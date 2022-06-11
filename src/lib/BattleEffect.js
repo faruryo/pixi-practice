@@ -15,7 +15,7 @@ export default class BattleEffect extends BaseSprite {
     "pipo-btleffect006_03",
     "pipo-btleffect006_04",
     "pipo-btleffect006_05",
-    "pipo-btleffect006_06"
+    "pipo-btleffect006_06",
   ];
 
   /**
@@ -36,8 +36,8 @@ export default class BattleEffect extends BaseSprite {
 
     const spritesheet = new PIXI.Spritesheet(baseTexture, SpritesJson);
 
-    return new Promise(resolve => {
-      spritesheet.parse(textureHash => {
+    return new Promise((resolve) => {
+      spritesheet.parse((textureHash) => {
         this.textureHash = textureHash;
         resolve(this);
       });
@@ -49,7 +49,7 @@ export default class BattleEffect extends BaseSprite {
    * @param {Array.<PIXI.Texture>} textureArray
    */
   _createAnimatedSprite(textureHash, textureNameArray) {
-    const textureArray = textureNameArray.map(name => textureHash[name]);
+    const textureArray = textureNameArray.map((name) => textureHash[name]);
 
     let sprite = new PIXI.AnimatedSprite(textureArray);
     sprite.anchor.set(0.5, 1);

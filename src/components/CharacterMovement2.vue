@@ -2,16 +2,20 @@
   <canvas width="800" height="600"></canvas>
 </template>
 
+
+
 <script>
 import * as PIXI from "pixi.js";
 import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
 
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "CharacterMovement2",
+
   methods: {
     /** Spritesheet生成完了後の非同期処理 */
-    onSailorGirlLoaded: function() {
-
+    onSailorGirlLoaded: function () {
       this.sailorGirl.x = this.app.view.width / 2;
       this.sailorGirl.y = this.app.view.height / 2;
       this.sailorGirl.scale.x = 2;
@@ -25,20 +29,20 @@ export default {
       document.addEventListener("keyup", this.handleKeyUp);
 
       // ゲームループを実装
-      this.app.ticker.add(delta => this.gameloop(delta));
+      this.app.ticker.add((delta) => this.gameloop(delta));
     },
     /** キーダウン時処理 */
-    handleKeyDown: function(e) {
+    handleKeyDown: function (e) {
       var key = e.key;
       this.keyPressed[key] = true;
     },
     /** キーアップ時処理 */
-    handleKeyUp: function(e) {
+    handleKeyUp: function (e) {
       var key = e.key;
       this.keyPressed[key] = false;
     },
     /** ゲームループ本体 */
-    gameloop: function(delta) {
+    gameloop: function (delta) {
       // 速度初期化
       let vx = 0;
       let vy = 0;
@@ -66,12 +70,13 @@ export default {
 
       // 方向を設定する。
       this.sailorGirl.setDirectionFrom2D(vx, vy);
-    }
+    },
   },
-  mounted: async function() {
+
+  mounted: async function () {
     this.app = new PIXI.Application({
       view: this.$el,
-      backgroundColor: 0xdae8f4
+      backgroundColor: 0xdae8f4,
     });
 
     // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
@@ -79,10 +84,9 @@ export default {
 
     this.sailorGirl = await new SailorGirlContainer();
     this.onSailorGirlLoaded();
-  }
-};
+  },
+});
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

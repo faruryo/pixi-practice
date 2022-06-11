@@ -8,11 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue/compat": "3.2.37",
     "core-js": "3.21.1",
     "lodash": "4.17.21",
     "pixi.js": "6.4.2",
-    "vue": "2.6.14",
-    "vue-router": "3.5.3"
+    "vue": "3.2.37",
+    "vue-router": "4.0.16"
   },
   "devDependencies": {
     "@babel/core": "7.18.2",
@@ -21,8 +22,7 @@
     "@vue/cli-plugin-eslint": "5.0.4",
     "@vue/cli-service": "5.0.1",
     "eslint": "8.17.0",
-    "eslint-plugin-vue": "7.20.0",
-    "vue-template-compiler": "2.6.14"
+    "eslint-plugin-vue": "7.20.0"
   },
   "eslintConfig": {
     "root": true,
@@ -31,7 +31,8 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:vue/vue3-essential"
     ],
     "rules": {
       "no-console": "off",

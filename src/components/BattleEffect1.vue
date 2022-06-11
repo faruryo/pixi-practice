@@ -2,18 +2,22 @@
   <canvas width="800" height="600"></canvas>
 </template>
 
+
+
 <script>
 import _ from "lodash";
 import * as PIXI from "pixi.js";
 import SailorGirlContainer from "@/lib/SailorGirlContainer.js";
 import BattleEffect from "@/lib/BattleEffect.js";
+import { defineComponent } from "vue";
 // import BaseSprite from "@/lib/BaseSprite.js";
 
-export default {
+export default defineComponent({
   name: "BattleEffect1",
+
   methods: {
     /** Spritesheet生成完了後の非同期処理 */
-    loadSprites: function() {
+    loadSprites: function () {
       this.sailorGirl.x = this.app.view.width / 2;
       this.sailorGirl.y = this.app.view.height / 2;
       this.sailorGirl.scale.x = 2;
@@ -39,31 +43,31 @@ export default {
       document.addEventListener("mouseup", this.handleMouseUp);
 
       // ゲームループを実装
-      this.app.ticker.add(delta => this.gameloop(delta));
+      this.app.ticker.add((delta) => this.gameloop(delta));
     },
     /** キーダウン時処理 */
-    handleKeyDown: function(e) {
+    handleKeyDown: function (e) {
       this.keyPressed[e.key] = true;
     },
     /** キーアップ時処理 */
-    handleKeyUp: function(e) {
+    handleKeyUp: function (e) {
       this.keyPressed[e.key] = false;
     },
     /** マウスダウン時処理 */
-    handleMouseDown: function(e) {
+    handleMouseDown: function (e) {
       this.mousePressed[e.button] = true;
     },
     /** マウスアップ時処理 */
-    handleMouseUp: function(e) {
+    handleMouseUp: function (e) {
       this.mousePressed[e.button] = false;
     },
     /** ゲームループ本体 */
-    gameloop: function(delta) {
+    gameloop: function (delta) {
       this.moveSailorGirl(delta);
       this.moveBattleEffect(delta);
     },
     /** セーラー少女の操作処理 */
-    moveSailorGirl: function(delta) {
+    moveSailorGirl: function (delta) {
       // 加速度定義
       const ACCELERATION = 3;
 
@@ -121,7 +125,7 @@ export default {
       }
     },
     /** バトルエフェクトの移動処理 */
-    moveBattleEffect: function(delta) {
+    moveBattleEffect: function (delta) {
       // 移動速度を計算する
       const vx = this.battleEffect.vx * delta;
       const vy = this.battleEffect.vy * delta;
@@ -135,7 +139,7 @@ export default {
       this.battleEffect.y = newy;
     },
     /** 障害物等を考慮し座標を補正をする */
-    correctMoving: function(x, y) {
+    correctMoving: function (x, y) {
       // 画面外に出ないようにする
       const newx = this.fitInRange(x, 0 + 1, this.app.view.width - 1);
       const newy = this.fitInRange(y, 0 + 1, this.app.view.height - 1);
@@ -143,31 +147,32 @@ export default {
       return { newx, newy };
     },
     /** 第1引数を第2引数と第3引数の範囲に収めた値を返す */
-    fitInRange: function(num, minNum, maxNum) {
+    fitInRange: function (num, minNum, maxNum) {
       return Math.max(minNum, Math.min(maxNum, num));
     },
     /** イメージロード */
-    loadImages: function(imageURLs) {
+    loadImages: function (imageURLs) {
       const loader = PIXI.Loader.shared;
       loader.reset(); // npm run serve時のリロードで同名ファイル名読み込みエラーを防ぐ
       loader.add(imageURLs);
 
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         loader.load(() => {
           resolve();
         });
       });
-    }
+    },
   },
-  mounted: async function() {
+
+  mounted: async function () {
     this.app = new PIXI.Application({
       view: this.$el,
-      backgroundColor: 0xdae8f4
+      backgroundColor: 0xdae8f4,
     });
 
     let imageURLs = _.uniqBy([
       ...SailorGirlContainer.getImageURLs(),
-      ...BattleEffect.getImageURLs()
+      ...BattleEffect.getImageURLs(),
     ]);
     await this.loadImages(imageURLs);
 
@@ -175,8 +180,8 @@ export default {
     this.battleEffect = await new BattleEffect();
 
     this.loadSprites();
-  }
-};
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

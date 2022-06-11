@@ -6,14 +6,17 @@
 import * as PIXI from "pixi.js";
 import AssetsImageLogo from "@/assets/logo.png";
 
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "MoveLogo",
+
   mounted() {
     //------画像のアニメーション-----//
     // 表示するcanvasを用意
     const app = new PIXI.Application({
       view: this.$el,
-      backgroundColor : 0xDAE8F4
+      backgroundColor: 0xdae8f4,
     });
 
     // イメージを指定
@@ -34,9 +37,9 @@ export default {
     document.addEventListener("keyup", handleKeyUp);
 
     // ゲームループを実装
-    app.ticker.add(delta => gameloop(delta, logo));
-  }
-};
+    app.ticker.add((delta) => gameloop(delta, logo));
+  },
+});
 
 let keyPressed = {};
 
