@@ -2,16 +2,21 @@
   <canvas width="800" height="600"></canvas>
 </template>
 
+
+
 <script>
 import * as PIXI from "pixi.js";
 import GirlSpritesJson from "@/assets/sailor_girl_sprites_tansio.json";
 import GirlSpritesPng from "@/assets/sailor_girl_sprites_tansio.png";
 
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "CharacterMovement",
+
   methods: {
     /** Assetsデータ読み込み後の非同期処理 */
-    onAssetsLoaded: function() {
+    onAssetsLoaded: function () {
       // 2.pngファイルを元にBaseTextureを生成する
       const baseTexture = PIXI.BaseTexture.from(GirlSpritesPng);
       // 3.Spritesheetオブジェクトを生成開始する
@@ -19,7 +24,7 @@ export default {
       spritesheet.parse(this.onSpritesheetLoaded);
     },
     /** Spritesheet生成完了後の非同期処理 */
-    onSpritesheetLoaded: function(textures) {
+    onSpritesheetLoaded: function (textures) {
       // girl関連SpriteをまとめるContainerを作る
       this.girlContainer = new PIXI.Container();
 
@@ -44,72 +49,72 @@ export default {
       document.addEventListener("keyup", this.handleKeyUp);
 
       // ゲームループを実装
-      this.app.ticker.add(delta => this.gameloop(delta));
+      this.app.ticker.add((delta) => this.gameloop(delta));
     },
     /** 方向ごとのAnimatedSpriteを作成しHashで返す */
-    createDirectionSprites: function(textureHash) {
+    createDirectionSprites: function (textureHash) {
       let spriteHash = {};
 
       spriteHash["down"] = this.createAnimatedSprite([
         textureHash["sailor_girl_01"],
         textureHash["sailor_girl_00"],
         textureHash["sailor_girl_01"],
-        textureHash["sailor_girl_02"]
+        textureHash["sailor_girl_02"],
       ]);
 
       spriteHash["downleft"] = this.createAnimatedSprite([
         textureHash["sailor_girl_04"],
         textureHash["sailor_girl_03"],
         textureHash["sailor_girl_04"],
-        textureHash["sailor_girl_05"]
+        textureHash["sailor_girl_05"],
       ]);
 
       spriteHash["left"] = this.createAnimatedSprite([
         textureHash["sailor_girl_07"],
         textureHash["sailor_girl_06"],
         textureHash["sailor_girl_07"],
-        textureHash["sailor_girl_08"]
+        textureHash["sailor_girl_08"],
       ]);
 
       spriteHash["downright"] = this.createAnimatedSprite([
         textureHash["sailor_girl_10"],
         textureHash["sailor_girl_09"],
         textureHash["sailor_girl_10"],
-        textureHash["sailor_girl_11"]
+        textureHash["sailor_girl_11"],
       ]);
 
       spriteHash["right"] = this.createAnimatedSprite([
         textureHash["sailor_girl_13"],
         textureHash["sailor_girl_12"],
         textureHash["sailor_girl_13"],
-        textureHash["sailor_girl_14"]
+        textureHash["sailor_girl_14"],
       ]);
 
       spriteHash["upleft"] = this.createAnimatedSprite([
         textureHash["sailor_girl_16"],
         textureHash["sailor_girl_15"],
         textureHash["sailor_girl_16"],
-        textureHash["sailor_girl_17"]
+        textureHash["sailor_girl_17"],
       ]);
 
       spriteHash["up"] = this.createAnimatedSprite([
         textureHash["sailor_girl_19"],
         textureHash["sailor_girl_18"],
         textureHash["sailor_girl_19"],
-        textureHash["sailor_girl_20"]
+        textureHash["sailor_girl_20"],
       ]);
 
       spriteHash["upright"] = this.createAnimatedSprite([
         textureHash["sailor_girl_22"],
         textureHash["sailor_girl_21"],
         textureHash["sailor_girl_22"],
-        textureHash["sailor_girl_23"]
+        textureHash["sailor_girl_23"],
       ]);
 
       return spriteHash;
     },
     /** AnimatedSpriteを作成して返す */
-    createAnimatedSprite: function(textureArray) {
+    createAnimatedSprite: function (textureArray) {
       let sprite = new PIXI.AnimatedSprite(textureArray);
       sprite.anchor.set(0.5);
       sprite.animationSpeed = 0.05;
@@ -118,17 +123,17 @@ export default {
       return sprite;
     },
     /** キーダウン時処理 */
-    handleKeyDown: function(e) {
+    handleKeyDown: function (e) {
       var key = e.key;
       this.keyPressed[key] = true;
     },
     /** キーアップ時処理 */
-    handleKeyUp: function(e) {
+    handleKeyUp: function (e) {
       var key = e.key;
       this.keyPressed[key] = false;
     },
     /** ゲームループ本体 */
-    gameloop: function(delta) {
+    gameloop: function (delta) {
       // 速度初期化
       let vx = 0;
       let vy = 0;
@@ -161,7 +166,7 @@ export default {
       }
     },
     /** 方向計算用メソッド */
-    getDirection: function(vx, vy) {
+    getDirection: function (vx, vy) {
       if (vx === undefined || vy === undefined) {
         return undefined;
       }
@@ -199,7 +204,7 @@ export default {
       throw "Unknown Error in getDirection";
     },
     /** 指定のAnimatedSpriteを表示する */
-    setDirection: function(spriteHash, direction) {
+    setDirection: function (spriteHash, direction) {
       if (!spriteHash[direction]) {
         console.warn("Undefined Key in SpriteHash. key:" + direction);
         console.warn(spriteHash);
@@ -212,12 +217,13 @@ export default {
       }
       // 指定の方向だけ表示する
       spriteHash[direction].visible = true;
-    }
+    },
   },
-  mounted: function() {
+
+  mounted: function () {
     this.app = new PIXI.Application({
       view: this.$el,
-      backgroundColor: 0xdae8f4
+      backgroundColor: 0xdae8f4,
     });
 
     const loader = PIXI.Loader.shared;
@@ -228,8 +234,8 @@ export default {
     // 1.pngファイルを読み込む
     loader.add(GirlSpritesPng);
     loader.load(this.onAssetsLoaded);
-  }
-};
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

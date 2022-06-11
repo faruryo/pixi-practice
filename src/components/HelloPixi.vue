@@ -5,21 +5,25 @@
 </template>
 
 <script>
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 import AssetsImageLogo from "@/assets/logo.png";
 
-export default {
-  name: 'HelloPixi',
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "HelloPixi",
+
   props: {
-    msg: String
+    msg: String,
   },
-  mounted () {
+
+  mounted() {
     //------画像のアニメーション-----//
     // 表示するcanvasを用意
     let app = new PIXI.Application({
       width: 800,
       height: 600,
-      backgroundColor: 0xdae8f4
+      backgroundColor: 0xdae8f4,
     });
     document.getElementById("stage").appendChild(app.view);
 
@@ -37,7 +41,7 @@ export default {
     app.stage.addChild(logo);
 
     // アニメーションの再生、ループ
-    app.ticker.add(function(delta) {
+    app.ticker.add(function (delta) {
       // 画像を回転
       logo.rotation += 0.05 * delta;
     });
@@ -46,22 +50,22 @@ export default {
 
     // スタイルを指定
     let styleBig = new PIXI.TextStyle({
-        fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
+      fontFamily: "Avenir, Helvetica, Arial, sans-serif",
       fontSize: 70,
-        align: 'center',
+      align: "center",
       wordWrapWidth: 1000,
-      wordWrap: true
+      wordWrap: true,
     });
-    let styleSmall =  new PIXI.TextStyle({
-        fontFamily: 'Avenir, Helvetica, Arial, sans-serif',
+    let styleSmall = new PIXI.TextStyle({
+      fontFamily: "Avenir, Helvetica, Arial, sans-serif",
       fontSize: 40,
-        align: 'center',
+      align: "center",
       wordWrapWidth: 1000,
-      wordWrap: true
+      wordWrap: true,
     });
 
     // スタイルを反映
-    let textBig = new PIXI.Text('Vue.js', styleBig);
+    let textBig = new PIXI.Text("Vue.js", styleBig);
     textBig.anchor.set(0.5);
 
     let textSmall = new PIXI.Text(this.msg, styleSmall);
@@ -76,8 +80,8 @@ export default {
     // ステージに表示させる
     app.stage.addChild(textBig);
     app.stage.addChild(textSmall);
-  }
-}
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

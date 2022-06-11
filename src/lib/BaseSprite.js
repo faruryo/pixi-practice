@@ -5,7 +5,6 @@ import * as PIXI from "pixi.js";
  * @extends PIXI.Container
  */
 export default class BaseSprite extends PIXI.Container {
-
   /**
    * @returns スプライトで利用するイメージのURL配列
    */
