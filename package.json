@@ -10,17 +10,18 @@
   "dependencies": {
     "core-js": "3.21.1",
     "lodash": "4.17.21",
-    "pixi.js": "5.3.11",
+    "pixi.js": "6.4.2",
     "vue": "2.6.14",
     "vue-router": "3.5.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "4.5.15",
-    "@vue/cli-plugin-eslint": "4.5.15",
+    "@babel/core": "7.18.2",
+    "@babel/eslint-parser": "7.18.2",
+    "@vue/cli-plugin-babel": "5.0.4",
+    "@vue/cli-plugin-eslint": "5.0.4",
     "@vue/cli-service": "4.5.15",
-    "babel-eslint": "10.1.0",
-    "eslint": "7.32.0",
-    "eslint-plugin-vue": "6.2.2",
+    "eslint": "8.17.0",
+    "eslint-plugin-vue": "7.20.0",
     "vue-template-compiler": "2.6.14"
   },
   "eslintConfig": {
@@ -37,7 +38,7 @@
       "no-debugger": "off"
     },
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@babel/eslint-parser"
     }
   },
   "postcss": {
