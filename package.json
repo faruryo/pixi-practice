@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vue/compat": "3.2.37",
-    "core-js": "3.21.1",
+    "core-js": "3.23.3",
     "lodash": "4.17.21",
     "pixi.js": "6.4.2",
     "vue": "3.2.37",
@@ -21,7 +21,7 @@
     "@vue/cli-plugin-babel": "5.0.6",
     "@vue/cli-plugin-eslint": "5.0.6",
     "@vue/cli-service": "5.0.6",
-    "eslint": "8.17.0",
+    "eslint": "8.18.0",
     "eslint-plugin-vue": "7.20.0"
   },
   "eslintConfig": {
