@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vue/compat": "3.2.45",
-    "core-js": "3.27.1",
+    "core-js": "3.27.2",
     "lodash": "4.17.21",
     "pixi.js": "6.5.8",
     "vue": "3.2.45",
