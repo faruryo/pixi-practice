@@ -1,5 +1,5 @@
 # ビルド環境
-FROM node:19.9-alpine as build-stage
+FROM node:21.3-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
